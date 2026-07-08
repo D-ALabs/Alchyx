@@ -1,0 +1,8 @@
+/* @alchyx/react/styles.css — one stylesheet with the token foundation + every
+   component's styles, for consumers that don't bundle the per-component CSS
+   imports. Import once at your app root (after or instead of @alchyx/tokens/css).
+
+   NOTE: the component @imports below are regenerated as components land. */
+@import "../../tokens/src/css/index.css";
+
+@import "./components/button/button.css";

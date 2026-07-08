@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@alchyx/react": ["../../packages/react/src/index.ts"],
+      "@alchyx/tokens": ["../../packages/tokens/src/index.ts"],
+      "@alchyx/tokens/tailwind": ["../../packages/tokens/src/tailwind-preset.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

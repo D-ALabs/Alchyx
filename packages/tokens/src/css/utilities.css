@@ -1,0 +1,78 @@
+/* ============================================================================
+   Alchyx — Interaction + texture utilities (ported from the D-ALabs runtime's
+   style-hover / style-focus helpers). !important is required so they win over
+   inline base styles.
+   ========================================================================== */
+.alx-hov-bd:hover {
+  border-color: var(--bd-hov) !important;
+}
+.alx-hov-ink:hover {
+  color: var(--ink) !important;
+}
+.alx-hov-deep-ink:hover {
+  color: var(--deep-ink) !important;
+}
+.alx-hov-lift:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: var(--sh-card) !important;
+  border-color: var(--bd-hov) !important;
+}
+.alx-hov-chip:hover {
+  border-color: var(--deep-ink) !important;
+  background-color: var(--chip-bg) !important;
+}
+.alx-hov-accent:hover {
+  border-color: var(--accent) !important;
+  background-color: var(--accent-soft) !important;
+}
+.alx-hov-scale:hover {
+  transform: scale(1.1) !important;
+}
+.alx-foc-accent:focus {
+  border-color: var(--accent) !important;
+}
+
+/* ============================================================================
+   Texture helpers — blueprint grid + film grain.
+   ========================================================================== */
+.alx-grid {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.alx-grid-deep {
+  background-image:
+    linear-gradient(var(--grid-deep) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-deep) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* Fixed film-grain overlay — add once near the top of the page.
+   Lab: opacity .04 + multiply; Dark/Ark: opacity .05 + screen. */
+.alx-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] .alx-grain,
+[data-theme="ark"] .alx-grain {
+  opacity: 0.05;
+  mix-blend-mode: screen;
+}
+
+/* Accessible screen-reader-only text. */
+.alx-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

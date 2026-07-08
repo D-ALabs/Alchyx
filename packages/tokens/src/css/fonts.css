@@ -1,0 +1,8 @@
+/* ============================================================================
+   Alchyx — Typeface bench (the pairing IS the brand; do not substitute)
+   Display: Space Grotesk 600 · Body/UI: Hanken Grotesk 400 · Mono: Space Mono 400
+   Load once. Self-host for production; the CDN import below is fine for
+   prototypes. adjustFontFallback is intentionally off so glyphs the webfonts
+   lack (→, −, …) fall through to the system stack, not a synthesized Arial.
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");

@@ -1,0 +1,237 @@
+/* ============================================================================
+   Alchyx Design Tokens — three skins in one sheet, ported 1:1 from the D-ALabs
+   design language (d-alabs-ui-index "Ultimate UI Index").
+
+   Default (no attribute) = LAB.
+     data-theme="lab"   paper & ink    (light)
+     data-theme="dark"  slate & bone   (dark)
+     data-theme="ark"   abyss & gold   (premium / membership)
+
+   Optionally pin an accent:  data-theme="lab" data-accent="mint"
+     Lab:  monochrome(default) mint blue amber
+     Dark: paper(default) mint blue amber
+     Ark:  gold(default) amber ivory bronze
+
+   Everything downstream reads CSS variables, so switching either attribute
+   re-tints the whole tree.
+   ========================================================================== */
+
+:root {
+  --font-sans: "Hanken Grotesk", system-ui, sans-serif; /* body / UI      */
+  --font-display: "Space Grotesk", sans-serif; /* headings/stats */
+  --font-mono: "Space Mono", monospace; /* labels/specs   */
+
+  /* Semantic status hues — fixed, accent-independent (see the design rules). */
+  --status-signal: #13b981; /* Signal / Live / pass         */
+  --status-caution: #d98a2b; /* Caution / Training / drift   */
+  --status-fault: #c25e54; /* Fault / error               */
+
+  /* Radius vocabulary (tight on purpose). */
+  --radius-control: 11px; /* buttons, inputs, textareas   */
+  --radius-control-sm: 10px; /* compact controls, squares    */
+  --radius-card: 16px; /* cards, wells, specimen frames*/
+  --radius-panel: 18px; /* large panels, modals, tabs   */
+  --radius-panel-lg: 22px; /* biggest panels / overlays    */
+  --radius-pill: 100px; /* pills, badges, toggles       */
+
+  /* Motion easing vocabulary. */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1); /* entrances, hover-lift */
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.2); /* magnetic, toggle knob */
+}
+
+/* ============================================================================
+   SKIN 1 — LAB (default on :root)
+   ========================================================================== */
+:root,
+[data-theme="lab"] {
+  --bg: #f5f2ea;
+  --surface: #fcfbf7;
+  --surface2: rgba(252, 251, 247, 0.55);
+  --deep: #16202e;
+  --deep2: #0e1620;
+  --panel: #16202e;
+  --panel-bd: rgba(0, 0, 0, 0);
+  --ink: #16202e;
+  --ink2: #1b2737;
+  --sub: #54606e;
+  --faint: #8a93a0;
+  --bd: #e4decf;
+  --bd2: #e9e4d8;
+  --bd-hov: #cdc6b5;
+  --stat: #16202e;
+  --grid: rgba(22, 32, 46, 0.05);
+  --grid-deep: rgba(255, 255, 255, 0.04);
+  --deep-ink: #eeeae0;
+  --deep-sub: #aeb6c0;
+  --deep-faint: #97a1ad;
+  --chip-bd: rgba(238, 234, 224, 0.18);
+  --chip-bg: rgba(238, 234, 224, 0.04);
+  --chip-tx: #d7dce2;
+  --pill-bd: #e0dac9;
+  --pill-tx: #6b7480;
+  --marq: rgba(22, 32, 46, 0.4);
+  --input-bd: rgba(255, 255, 255, 0.16);
+  --av-bg: #16202e;
+  --av-tx: #f5f2ea;
+  --av-bd: rgba(0, 0, 0, 0);
+  --sh-card: 0 26px 52px -32px rgba(22, 32, 46, 0.42);
+  /* accent (default: Monochrome) + derived */
+  --accent: #16202e;
+  --accent-ink: #f5f2ea;
+  --accent-soft: rgba(22, 32, 46, 0.08);
+  --sh-btn: 0 12px 30px -14px rgba(22, 32, 46, 0.75);
+  --inv-bg: #f5f2ea;
+  --inv-tx: #16202e;
+  --liquid: #16202e;
+}
+:root[data-accent="mint"],
+[data-theme="lab"][data-accent="mint"] {
+  --accent: #13b981;
+  --accent-soft: rgba(19, 185, 129, 0.15);
+  --sh-btn: 0 12px 30px -14px rgba(19, 185, 129, 0.75);
+}
+:root[data-accent="blue"],
+[data-theme="lab"][data-accent="blue"] {
+  --accent: #3b6fe0;
+  --accent-soft: rgba(59, 111, 224, 0.15);
+  --sh-btn: 0 12px 30px -14px rgba(59, 111, 224, 0.75);
+}
+:root[data-accent="amber"],
+[data-theme="lab"][data-accent="amber"] {
+  --accent: #d98a2b;
+  --accent-soft: rgba(217, 138, 43, 0.15);
+  --sh-btn: 0 12px 30px -14px rgba(217, 138, 43, 0.75);
+}
+
+/* ============================================================================
+   SKIN 2 — DARK (slate & bone)
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg: #0d1522;
+  --surface: #131d2d;
+  --surface2: rgba(19, 29, 45, 0.55);
+  --deep: #080f1a;
+  --deep2: #060b14;
+  --panel: #0a1424;
+  --panel-bd: rgba(237, 232, 220, 0.12);
+  --ink: #ede8dc;
+  --ink2: #e4dfd2;
+  --sub: #93a1b3;
+  --faint: #6c7a8c;
+  --bd: rgba(237, 232, 220, 0.14);
+  --bd2: rgba(237, 232, 220, 0.09);
+  --bd-hov: rgba(237, 232, 220, 0.32);
+  --stat: #ede8dc;
+  --grid: rgba(237, 232, 220, 0.05);
+  --grid-deep: rgba(255, 255, 255, 0.04);
+  --deep-ink: #ede8dc;
+  --deep-sub: #a5b1c0;
+  --deep-faint: #7e8a99;
+  --chip-bd: rgba(237, 232, 220, 0.18);
+  --chip-bg: rgba(237, 232, 220, 0.05);
+  --chip-tx: #d7dce2;
+  --pill-bd: rgba(237, 232, 220, 0.22);
+  --pill-tx: #a5b1c0;
+  --marq: rgba(237, 232, 220, 0.4);
+  --input-bd: rgba(237, 232, 220, 0.18);
+  --av-bg: #ede8dc;
+  --av-tx: #16202e;
+  --av-bd: rgba(0, 0, 0, 0);
+  --sh-card: 0 28px 54px -30px rgba(0, 0, 0, 0.7);
+  /* accent (default: Paper) + derived */
+  --accent: #eeeae0;
+  --accent-ink: #16202e;
+  --accent-soft: rgba(238, 234, 224, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(238, 234, 224, 0.35);
+  --inv-bg: #f5f2ea;
+  --inv-tx: #16202e;
+  --liquid: #e9dfd1;
+}
+[data-theme="dark"][data-accent="mint"] {
+  --accent: #13b981;
+  --accent-soft: rgba(19, 185, 129, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(19, 185, 129, 0.35);
+}
+[data-theme="dark"][data-accent="blue"] {
+  --accent: #3b6fe0;
+  --accent-soft: rgba(59, 111, 224, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(59, 111, 224, 0.35);
+}
+[data-theme="dark"][data-accent="amber"] {
+  --accent: #d98a2b;
+  --accent-soft: rgba(217, 138, 43, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(217, 138, 43, 0.35);
+}
+
+/* ============================================================================
+   SKIN 3 — ARK (abyss & gold — premium / membership)
+   ========================================================================== */
+[data-theme="ark"] {
+  --bg: #081426;
+  --surface: #0e1d34;
+  --surface2: rgba(11, 26, 48, 0.5);
+  --deep: #050e1d;
+  --deep2: #04101f;
+  --panel: #0a1830;
+  --panel-bd: rgba(217, 174, 99, 0.18);
+  --ink: #f4eee0;
+  --ink2: #ebe6d8;
+  --sub: #9fb1c6;
+  --faint: #6e8198;
+  --bd: rgba(217, 174, 99, 0.22);
+  --bd2: rgba(217, 174, 99, 0.13);
+  --bd-hov: rgba(217, 174, 99, 0.45);
+  --stat: #e8c074;
+  --grid: rgba(217, 174, 99, 0.06);
+  --grid-deep: rgba(217, 174, 99, 0.05);
+  --deep-ink: #ebe6d8;
+  --deep-sub: #9fb1c6;
+  --deep-faint: #7e8ea2;
+  --chip-bd: rgba(217, 174, 99, 0.22);
+  --chip-bg: rgba(217, 174, 99, 0.05);
+  --chip-tx: #d7c8a4;
+  --pill-bd: rgba(217, 174, 99, 0.28);
+  --pill-tx: #9fb1c6;
+  --marq: rgba(199, 207, 218, 0.42);
+  --input-bd: rgba(217, 174, 99, 0.22);
+  --av-bg: #0a1426;
+  --av-tx: #e8c074;
+  --av-bd: rgba(217, 174, 99, 0.38);
+  --sh-card: 0 28px 54px -30px rgba(0, 0, 0, 0.75);
+  /* accent (default: Gold) + derived — in Ark the inverse-fill == accent */
+  --accent: #d9ae63;
+  --accent-ink: #081426;
+  --accent-soft: rgba(217, 174, 99, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(217, 174, 99, 0.85);
+  --inv-bg: #d9ae63;
+  --inv-tx: #081426;
+  --liquid: #e8c074;
+}
+[data-theme="ark"][data-accent="amber"] {
+  --accent: #e2a338;
+  --accent-soft: rgba(226, 163, 56, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(226, 163, 56, 0.85);
+  --inv-bg: #e2a338;
+}
+[data-theme="ark"][data-accent="ivory"] {
+  --accent: #e9e1cc;
+  --accent-soft: rgba(233, 225, 204, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(233, 225, 204, 0.85);
+  --inv-bg: #e9e1cc;
+}
+[data-theme="ark"][data-accent="bronze"] {
+  --accent: #c98c49;
+  --accent-soft: rgba(201, 140, 73, 0.15);
+  --sh-btn: 0 14px 34px -16px rgba(201, 140, 73, 0.85);
+  --inv-bg: #c98c49;
+}
+
+/* Orbit / signature-visual aliases (same for every skin). */
+:root,
+[data-theme] {
+  --orbit-bg: transparent;
+  --orbit-grid: var(--grid);
+  --orbit-ink: var(--ink);
+  --orbit-accent: var(--accent);
+  --orbit-soft: var(--accent-soft);
+}

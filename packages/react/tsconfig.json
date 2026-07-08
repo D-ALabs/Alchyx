@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@alchyx/tokens": ["../tokens/src/index.ts"],
+      "@alchyx/tokens/*": ["../tokens/src/*"]
+    }
+  },
+  "include": ["src"]
+}
