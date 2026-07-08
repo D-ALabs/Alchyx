@@ -155,7 +155,7 @@ export function App() {
       <Toolbar />
       <Gallery />
       <footer className="pg-footer">
-        Alchyx · 앨릭스 — D-ALabs, LLC (유한회사 디알랩스) · one accent, three skins.
+        Alchyx — D-ALabs, LLC · one accent, three skins.
       </footer>
     </AlchyxProvider>
   );

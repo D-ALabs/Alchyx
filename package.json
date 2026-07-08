@@ -2,9 +2,9 @@
   "name": "alchyx",
   "version": "0.1.0",
   "private": true,
-  "description": "Alchyx (앨릭스) — D-ALabs' Ultimate Design System. One coherent React + TypeScript library on the D-ALabs Lab/Dark/Ark design language, consolidating the best of eight MIT design systems.",
+  "description": "Alchyx — D-ALabs' Ultimate Design System. One coherent React + TypeScript library on the D-ALabs Lab/Dark/Ark design language, consolidating the best of eight MIT design systems.",
   "license": "MIT",
-  "author": "D-ALabs, LLC (유한회사 디알랩스)",
+  "author": "D-ALabs, LLC",
   "type": "module",
   "workspaces": [
     "packages/*",

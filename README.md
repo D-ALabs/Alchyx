@@ -1,6 +1,6 @@
 <div align="center">
 
-# Alchyx · 앨릭스
+# Alchyx
 
 **Alchyx** /ˈælkɪks/ — like *alchemy*.
 
@@ -8,7 +8,7 @@ D-ALabs' Ultimate Design System — one coherent **React + TypeScript** library 
 D-ALabs **Lab / Dark / Ark** design language, consolidating the best of eight
 MIT-licensed design systems into a single API.
 
-`MIT` · `alpha (0.1.0)` · by **D-ALabs, LLC (유한회사 디알랩스)**
+`MIT` · `alpha (0.1.0)` · by **D-ALabs, LLC**
 
 </div>
 
@@ -246,5 +246,5 @@ Open Font License 1.1.
 
 ## License
 
-[MIT](LICENSE) © 2026 D-ALabs, LLC (유한회사 디알랩스). Third-party notices in
+[MIT](LICENSE) © 2026 D-ALabs, LLC. Third-party notices in
 [`NOTICE`](NOTICE).
