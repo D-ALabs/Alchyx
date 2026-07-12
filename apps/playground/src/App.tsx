@@ -16,7 +16,7 @@ function Toolbar() {
   return (
     <header className="pg-toolbar">
       <div className="pg-wordmark">
-        Alchyx<span className="pg-wordmark-sub"> / D-ALabs Design System</span>
+        Alchyx<span className="pg-wordmark-sub"> / Button integration harness</span>
       </div>
       <div className="pg-switch-group">
         <div className="pg-seg" role="group" aria-label="Skin">
@@ -101,7 +101,7 @@ export function Specimen({
 function Gallery() {
   return (
     <main className="pg-main">
-      <Section index="03" eyebrow="Buttons & links" title="Actions." count="5 variants">
+      <Section index="01" eyebrow="Package smoke" title="Button." count="6 specimens">
         <Specimen label="BT-01 · Primary" note="Accent">
           <Button>
             Request a demo <span aria-hidden>→</span>
@@ -155,7 +155,7 @@ export function App() {
       <Toolbar />
       <Gallery />
       <footer className="pg-footer">
-        Alchyx — D-ALabs, LLC · one accent, three skins.
+        Focused workspace integration harness · one component, three skins.
       </footer>
     </AlchyxProvider>
   );

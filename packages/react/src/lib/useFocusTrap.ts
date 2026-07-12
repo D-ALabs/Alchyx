@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isTopmostOverlayElement } from "./overlayStack";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -45,6 +46,7 @@ export function useFocusTrap(
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
+      if (!isTopmostOverlayElement(container)) return;
       const focusables = getFocusable(container);
       if (focusables.length === 0) {
         event.preventDefault();

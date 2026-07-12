@@ -1,0 +1,75 @@
+/* SegmentedControl — single-select pill track, accent fill on the active segment.
+   Fluent / Ant Design / Meta Astryx lineage. One accent, pill radii, calm motion. */
+.alx-seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-pill);
+  vertical-align: middle;
+}
+.alx-seg--sm {
+  padding: 3px;
+}
+
+.alx-seg__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--sub);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.25s var(--ease-expo),
+    color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Sizes */
+.alx-seg--md .alx-seg__item {
+  padding: 9px 18px;
+  font-size: 14px;
+}
+.alx-seg--sm .alx-seg__item {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+/* Resting hover on inactive segments */
+.alx-seg__item:hover:not([data-state="active"]):not(:disabled) {
+  color: var(--ink);
+}
+
+/* Active segment: accent fill on the pill */
+.alx-seg__item[data-state="active"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--sh-btn);
+}
+
+.alx-seg__item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.alx-seg__item:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-seg__item {
+    transition: none;
+  }
+}

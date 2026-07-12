@@ -1,0 +1,61 @@
+/* Separator — a 1px --bd rule. Plain (horizontal / vertical) or labelled ("OR").
+   Colour transitions are calm so it settles gracefully across the Lab/Dark/Ark skins. */
+.alx-separator {
+  border: 0;
+  flex-shrink: 0;
+}
+.alx-separator:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Plain horizontal rule (no label). */
+.alx-separator--horizontal:not(.alx-separator--labelled) {
+  width: 100%;
+  height: 1px;
+  background: var(--bd);
+  transition: background-color 0.25s ease;
+}
+
+/* Vertical rule — stretches to the flex row's height, else falls back to 1em. */
+.alx-separator--vertical {
+  display: inline-block;
+  align-self: stretch;
+  width: 1px;
+  min-height: 1em;
+  background: var(--bd);
+  vertical-align: middle;
+  transition: background-color 0.25s ease;
+}
+
+/* Labelled rule (horizontal only): line — label — line. */
+.alx-separator--labelled {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: transparent;
+}
+.alx-separator__line {
+  flex: 1 1 0;
+  height: 1px;
+  background: var(--bd);
+  transition: background-color 0.25s ease;
+}
+.alx-separator__label {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-separator--horizontal:not(.alx-separator--labelled),
+  .alx-separator--vertical,
+  .alx-separator__line {
+    transition: none;
+  }
+}

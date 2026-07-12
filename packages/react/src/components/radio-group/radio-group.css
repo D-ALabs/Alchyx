@@ -1,0 +1,99 @@
+/* RadioGroup — single-choice composite. Custom dot, accent fill when selected,
+   spring on the inner mark. Vertical by default; horizontal wraps into a row. */
+.alx-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.alx-radio-group--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+
+.alx-radio-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: start;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.alx-radio-item[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* The dot: an outer ring plus an inner accent mark that scales in when checked. */
+.alx-radio-item__dot {
+  position: relative;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--input-bd);
+  background: var(--surface);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.3s var(--ease-spring);
+}
+.alx-radio-item__dot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.alx-radio-item:hover:not([data-disabled]) .alx-radio-item__dot {
+  border-color: var(--bd-hov);
+}
+.alx-radio-item:active:not([data-disabled]) .alx-radio-item__dot {
+  transform: scale(0.92);
+}
+
+.alx-radio-item[data-state="checked"] .alx-radio-item__dot {
+  border-color: var(--accent);
+}
+.alx-radio-item[data-state="checked"] .alx-radio-item__dot::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Keyboard focus: accent ring + soft halo on the dot (button outline suppressed). */
+.alx-radio-item:focus-visible {
+  outline: none;
+}
+.alx-radio-item:focus-visible .alx-radio-item__dot {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.alx-radio-item__label {
+  display: inline-block;
+}
+.alx-radio-item__label:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-radio-item__dot,
+  .alx-radio-item__dot::after {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .alx-radio-item:active:not([data-disabled]) .alx-radio-item__dot {
+    transform: none;
+  }
+}

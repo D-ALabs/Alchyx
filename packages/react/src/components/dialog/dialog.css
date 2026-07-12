@@ -1,0 +1,83 @@
+/* Dialog — dimmed overlay + centered panel, panel radius 18px. */
+.alx-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--deep2) 62%, transparent);
+  backdrop-filter: blur(3px);
+  animation: alx-overlay-in 0.3s var(--ease-expo) both;
+}
+.alx-dialog__panel {
+  position: relative;
+  width: 100%;
+  max-height: min(85vh, 720px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.6);
+  padding: 28px;
+  outline: none;
+  animation: alx-panel-in 0.4s var(--ease-expo) both;
+}
+.alx-dialog__panel:focus-visible {
+  outline: none;
+}
+
+.alx-dialog__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.alx-dialog__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0;
+}
+.alx-dialog__desc {
+  color: var(--sub);
+  line-height: 1.6;
+  margin: 0;
+}
+.alx-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+
+@keyframes alx-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes alx-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-dialog__overlay,
+  .alx-dialog__panel {
+    animation: none;
+  }
+}

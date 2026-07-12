@@ -1,0 +1,112 @@
+/* Accordion — a bordered disclosure list. One accent, mono-caps-free titles in
+   the display face, a chevron that rotates on open, and a calm reveal. */
+.alx-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.alx-accordion__item + .alx-accordion__item {
+  border-top: 1px solid var(--bd);
+}
+.alx-accordion__item[data-disabled] {
+  opacity: 0.55;
+}
+
+/* Header wrapper — a real heading element, stripped of default margins. */
+.alx-accordion__header {
+  margin: 0;
+  font: inherit;
+}
+
+.alx-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: start;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--ink);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+.alx-accordion__trigger:not(:disabled):hover {
+  background: var(--accent-soft);
+}
+.alx-accordion__trigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+  border-radius: var(--radius-control-sm);
+}
+.alx-accordion__trigger:disabled {
+  cursor: not-allowed;
+  color: var(--faint);
+}
+
+.alx-accordion__trigger-label {
+  flex: 1 1 auto;
+}
+
+.alx-accordion__chevron {
+  flex: none;
+  color: var(--faint);
+  transform-origin: center;
+  transition:
+    transform 0.35s var(--ease-expo),
+    color 0.25s ease;
+}
+.alx-accordion__trigger[data-state="open"] .alx-accordion__chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.alx-accordion__content {
+  overflow: hidden;
+  color: var(--sub);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.alx-accordion__content[hidden] {
+  display: none;
+}
+.alx-accordion__content[data-state="open"] {
+  animation: alx-accordion-reveal 0.35s var(--ease-expo);
+}
+.alx-accordion__content-inner {
+  padding: 0 20px 20px;
+}
+
+@keyframes alx-accordion-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-accordion__trigger,
+  .alx-accordion__chevron {
+    transition: none;
+  }
+  .alx-accordion__content[data-state="open"] {
+    animation: none;
+  }
+}

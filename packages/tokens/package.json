@@ -1,26 +1,35 @@
 {
   "name": "@alchyx/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0-beta.1",
   "description": "Alchyx design tokens — the D-ALabs Lab/Dark/Ark language as CSS variables, typed JS tokens, and a Tailwind preset.",
   "license": "MIT",
   "type": "module",
-  "sideEffects": ["*.css"],
+  "sideEffects": ["**/*.css"],
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
     },
     "./tailwind": {
-      "types": "./src/tailwind-preset.ts",
-      "default": "./src/tailwind-preset.ts"
+      "types": "./dist/tailwind-preset.d.ts",
+      "import": "./dist/tailwind-preset.js",
+      "require": "./dist/tailwind-preset.cjs",
+      "default": "./dist/tailwind-preset.js"
     },
-    "./css": "./src/css/index.css",
-    "./css/*": "./src/css/*"
+    "./css": "./dist/css/index.css",
+    "./css/*": "./dist/css/*",
+    "./tailwind.css": "./dist/css/tailwind.css"
   },
-  "files": ["src", "dist"],
+  "files": ["src", "dist", "README.md"],
   "scripts": {
-    "build": "tsup src/index.ts src/tailwind-preset.ts --format esm,cjs --dts --clean",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "build": "tsup src/index.ts src/tailwind-preset.ts --format esm,cjs --dts --clean && node scripts/build-css.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "check:contracts": "node scripts/check-contract.mjs",
+    "check": "pnpm run build && pnpm run check:contracts",
+    "test": "pnpm run check",
+    "prepack": "pnpm run check"
   },
   "devDependencies": {
     "tsup": "^8.2.4",

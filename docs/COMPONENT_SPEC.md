@@ -5,11 +5,12 @@ Alchyx is the D-ALabs "Ultimate Design System": one coherent, accessible React +
 TypeScript library on the D-ALabs **Lab / Dark / Ark** design language,
 consolidating the best APIs of shadcn/ui, Radix Primitives, Base UI, Meta Astryx,
 Fluent UI, GitHub Primer, Twilio Paste, and Ant Design. Follow this contract
-**exactly** so 22 independently-authored components come out as one system.
+**exactly** so the 31-component package continues to behave as one system.
 
-The canonical reference is the already-built **Button**:
-`packages/react/src/components/button/{Button.tsx,button.css,index.ts}`. Match its
-structure, quality, and conventions.
+Start from the closest existing pattern instead of treating one component as a
+universal template: Button demonstrates `asChild` and variants, RadioGroup and
+Switch demonstrate form participation, and Dialog/DropdownMenu demonstrate the
+shared overlay stack. Match their current structure, quality, and conventions.
 
 ---
 
@@ -24,8 +25,9 @@ kebab-case component name, containing exactly:
 
 The `.tsx` file must `import "./<dir>.css";` at the top so styles are co-located.
 
-Do **not** edit the shared barrel (`src/index.ts`) or master stylesheet
-(`src/index.css`) — the integrator regenerates those by scanning folders.
+Do **not** hand-edit the shared barrel (`src/index.ts`) or master stylesheet
+(`src/index.css`). Run `pnpm generate` after adding a component and commit the
+deterministic output; `pnpm generate:check` is a release gate.
 
 ## 2. Imports — what you may use
 
@@ -35,6 +37,8 @@ Do **not** edit the shared barrel (`src/index.ts`) or master stylesheet
 - Behavior primitives from `../../lib` (already built, do not re-implement):
   `useControllableState`, `useId`, `useComposedRefs`, `Portal`, `VisuallyHidden`,
   `useDismissable`, `useFocusTrap`, `useScrollLock`, `useIsomorphicLayoutEffect`.
+- Custom form controls use the shared `useFormReset` helper and a native form
+  control/proxy; do not reimplement form ownership or reset listeners.
 - Design tokens (types/values) if needed: `import { ... } from "@alchyx/tokens";`
 
 **No other dependencies.** No Radix, no clsx, no framer-motion, no positioning
@@ -46,10 +50,14 @@ libs. React + `react-dom` (peers) only.
   named function so the displayName is set: `forwardRef<HTMLXElement, XProps>(function X(...))`.
 - Props interface `XProps extends React.ComponentPropsWithoutRef<"element">` (or
   the right `*HTMLAttributes`) so consumers can pass `className`, `id`, `aria-*`,
-  data-attrs, and handlers. Always merge incoming `className` with `cn(...)`, and
-  spread `{...props}` last (after your defaults) so consumers can override.
+  data-attrs, and handlers. Always merge incoming `className` with `cn(...)`.
+  Compose consumer handlers with required internal behavior and honor
+  `event.defaultPrevented`; do not let a trailing spread replace accessibility,
+  keyboard, disabled, or state-transition handlers.
 - Offer `asChild?: boolean` (via `Slot`) on single-element components where
   polymorphism is useful (triggers, items, the root of layout components).
+  Disabled/loading `asChild` controls must also prevent mouse and Enter/Space
+  activation and remove links from sequential keyboard focus.
 - Controlled/uncontrolled state uses `useControllableState` — expose
   `value`/`defaultValue`/`onValueChange` (or `open`/`defaultOpen`/`onOpenChange`,
   `checked`/`defaultChecked`/`onCheckedChange`, etc., matching the pattern).
@@ -63,9 +71,8 @@ libs. React + `react-dom` (peers) only.
 - Class names: BEM-ish, all prefixed `alx-<comp>`. Root `.alx-<comp>`, parts
   `.alx-<comp>__part`, variants `.alx-<comp>--variant`. Never collide with other
   components.
-- **Only** use the CSS variables below (plus the three semantic status hexes).
-  Never hardcode any other color, and never use pure black/white (paper is
-  `#F5F2EA`, ink is `#16202E`). Because everything reads variables, your component
+- **Only** use the CSS variables below. Never hardcode a brand, neutral, accent,
+  or semantic status color in component CSS. Because everything reads variables, your component
   automatically works in all three skins — **do not** write skin-specific rules
   unless a value genuinely differs per skin (rare).
 - Radius vocabulary (use these, don't invent): controls/inputs
@@ -79,31 +86,34 @@ libs. React + `react-dom` (peers) only.
   - `var(--font-mono)` (Space Mono 400): eyebrows, specs, table headers, metadata,
     breadcrumbs, badges — **always `text-transform: uppercase` + wide tracking
     `.1em`–`.2em`.** This mono-caps layer is the signature.
-- One accent only: `var(--accent)` fill, `var(--accent-ink)` text on it,
-  `var(--accent-soft)` for hover fills/focus halos. Never introduce a second brand
-  hue. Semantic status colors are the only exception.
+- One accent only, with distinct roles: `var(--accent)` for fills/indicators,
+  `var(--accent-fg)` for accent-colored copy on `--bg`/`--surface`,
+  `var(--accent-text)` for copy on an accent fill, `var(--accent-soft)` for subtle
+  surfaces, and `var(--focus-ring)` for focus indication. `--accent-ink` remains
+  a compatibility alias of `--accent-text`; prefer the role-specific names.
 - Motion is slow/calm. Easings: `var(--ease-expo)` = `cubic-bezier(.16,1,.3,1)`
   (entrances, hover-lift), `var(--ease-spring)` = `cubic-bezier(.2,.9,.3,1.2)`
   (toggle knob, press). Hover/border transitions `.2s–.3s`. Reuse keyframes from
   tokens: `alx-blink`, `alx-shimmer`, `alx-spin`, `alx-revealUp`. **Every** motion
   must degrade under `@media (prefers-reduced-motion: reduce)`.
-- Focus: visible focus for keyboard users via `:focus-visible` — either
-  `outline: 2px solid var(--accent); outline-offset: 2px;` or an accent border /
-  `0 0 0 3px var(--accent-soft)` halo. Never remove focus styling without a
+- Focus: visible focus for keyboard users via `:focus-visible` — use
+  `outline: 2px solid var(--focus-ring); outline-offset: 2px;` or a
+  `--focus-ring` border plus an optional `--accent-soft` halo. Never remove focus styling without a
   replacement.
 - Deep bands: components meant to sit on `var(--deep)` (tooltip, toast) use the
   deep text ramp `--deep-ink`/`--deep-sub`/`--deep-faint` and background `--deep`.
 
 ### CSS variable reference (the only colors you may use)
 
-Backgrounds: `--bg` (page), `--surface` (cards), `--surface2` (translucent inset:
+Backgrounds: `--bg` (page), `--surface` (cards), `--surface2` (inset
 inputs, wells, pills), `--deep`, `--deep2` (near-black bands), `--panel`,
 `--panel-bd`.
 Text: `--ink` (primary), `--ink2`, `--sub` (secondary/body), `--faint` (mono
 labels/meta). On deep bands: `--deep-ink`, `--deep-sub`, `--deep-faint`.
 Lines: `--bd` (default hairline), `--bd2` (fainter divider), `--bd-hov` (hover /
 emphasis / "slash" separator). Inputs: `--input-bd`.
-Accent: `--accent`, `--accent-ink`, `--accent-soft`. Inverse fill on deep:
+Accent: `--accent`, `--accent-fg`, `--accent-text`, `--accent-soft`,
+`--focus-ring` (`--accent-ink` is a compatibility alias). Inverse fill on deep:
 `--inv-bg`, `--inv-tx`.
 Pills/chips: `--pill-bd`, `--pill-tx`, `--chip-bd`, `--chip-bg`, `--chip-tx`.
 Avatars: `--av-bg`, `--av-tx`, `--av-bd`. Stat numerals: `--stat`.
@@ -113,9 +123,9 @@ Radii: `--radius-control`, `--radius-control-sm`, `--radius-card`, `--radius-pan
 `--radius-panel-lg`, `--radius-pill`.
 Easing: `--ease-expo`, `--ease-spring`. Fonts: `--font-display`, `--font-sans`,
 `--font-mono`.
-**Semantic status hues — the only hardcoded hex allowed:** Signal/Live/pass
-`#13B981`, Caution/Training `#D98A2B`, Fault/error `#C25E54`. (Also available as
-`--status-signal` / `--status-caution` / `--status-fault`.)
+Semantic status: `--status-signal`, `--status-caution`, and `--status-fault` are
+solid indicator/chart hues. Status copy and tinted panels must use the matching
+`--status-*-foreground` and `--status-*-surface` roles.
 
 ## 5. Accessibility (required)
 
@@ -128,8 +138,30 @@ Easing: `--ease-expo`, `--ease-spring`. Fonts: `--font-display`, `--font-sans`,
 - Icon-only controls get an accessible name (`aria-label` or `VisuallyHidden`).
 - Respect `prefers-reduced-motion`.
 - Don't trap keyboard users; manage focus for overlays (use `useFocusTrap`).
+- Portalled UI must render through the shared `Portal` so wrapper-scoped
+  providers can bridge skin/accent and an optional `portalContainer`.
+- Dismissable layers must use the shared stack: only the top layer handles
+  Escape or outside interaction. Modal layers restore focus and use the shared,
+  reference-counted scroll lock so closing one nested modal cannot unlock the
+  page beneath another.
+- Form controls expose native form semantics. Native controls pass through
+  `name`, `value`, `required`, `disabled`, and `form`; custom controls provide a
+  native proxy, submit the same `FormData`, restore uncontrolled defaults on
+  reset, and redirect invalid focus to the visible control. Controlled state
+  remains owned by the caller.
 
-## 6. Quality bar
+## 6. Current surface and maturity
+
+- **Stable:** Alert, Avatar, Badge, Breadcrumbs, Button, Card, Checkbox,
+  IconButton, Input, Kbd, Pagination, Progress, Select, Separator, Skeleton,
+  Spinner, Stat, Table, Tag, Textarea.
+- **Beta:** Accordion, Dialog, Drawer, DropdownMenu, RadioGroup,
+  SegmentedControl, Slider, Switch, Tabs, Toast, Tooltip.
+
+Maturity describes API stability. Every component still meets the same type,
+keyboard, focus, motion, form, and accessibility requirements.
+
+## 7. Quality bar
 
 - Production-grade, self-contained, compiles under strict TS, no console errors.
 - Sensible, minimal, well-typed public API; JSDoc on the component and non-obvious
@@ -139,3 +171,11 @@ Easing: `--ease-expo`, `--ease-spring`. Fonts: `--font-display`, `--font-sans`,
   every public type.
 - Keep unique export names (prefix subparts with the component name:
   `DialogTitle`, not `Title`) to avoid barrel collisions.
+- Add or extend Vitest/Testing Library coverage for controlled/uncontrolled
+  state, keyboard interaction, and the behavior contract being introduced.
+  Form controls cover `FormData`, reset, required/disabled, and external `form`
+  ownership. Overlays cover nesting, topmost dismissal, focus restoration,
+  provider theme scope, and scroll-lock reference counting.
+- Before handoff run `pnpm generate:check`, `pnpm typecheck`, `pnpm test`, and
+  the relevant builds. Release changes additionally run `pnpm pack:smoke` to
+  install the packed packages with React 18 and React 19.

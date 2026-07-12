@@ -1,0 +1,99 @@
+/* Tooltip — a small deep-band hint anchored to one side of its trigger.
+   Positioning is transform-based per side (no collision detection). The bubble
+   stays in the DOM (opacity toggled) so aria-describedby always resolves. */
+.alx-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.alx-tooltip__bubble {
+  /* Directional entrance nudge; zeroed on open and under reduced motion. */
+  --alx-tt-shift: 4px;
+
+  position: absolute;
+  z-index: 60;
+  max-width: 240px;
+  width: max-content;
+  padding: 8px 11px;
+  border-radius: var(--radius-control-sm);
+  background: var(--deep);
+  color: var(--deep-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.18s var(--ease-expo),
+    transform 0.24s var(--ease-expo);
+}
+
+.alx-tooltip__bubble[data-state="open"] {
+  --alx-tt-shift: 0px;
+  opacity: 1;
+}
+
+/* Sides — transforms handle both centering and the directional nudge. */
+.alx-tooltip__bubble--top {
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 8px;
+  transform: translateX(-50%) translateY(var(--alx-tt-shift));
+}
+.alx-tooltip__bubble--bottom {
+  top: 100%;
+  left: 50%;
+  margin-top: 8px;
+  transform: translateX(-50%) translateY(calc(-1 * var(--alx-tt-shift)));
+}
+.alx-tooltip__bubble--left {
+  right: 100%;
+  top: 50%;
+  margin-right: 8px;
+  transform: translateY(-50%) translateX(var(--alx-tt-shift));
+}
+.alx-tooltip__bubble--right {
+  left: 100%;
+  top: 50%;
+  margin-left: 8px;
+  transform: translateY(-50%) translateX(calc(-1 * var(--alx-tt-shift)));
+}
+
+/* Arrow — a rotated square sharing the bubble fill, seated on the anchored edge. */
+.alx-tooltip__arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--deep);
+  transform: rotate(45deg);
+}
+.alx-tooltip__bubble--top .alx-tooltip__arrow {
+  bottom: -3px;
+  left: 50%;
+  margin-left: -4px;
+}
+.alx-tooltip__bubble--bottom .alx-tooltip__arrow {
+  top: -3px;
+  left: 50%;
+  margin-left: -4px;
+}
+.alx-tooltip__bubble--left .alx-tooltip__arrow {
+  right: -3px;
+  top: 50%;
+  margin-top: -4px;
+}
+.alx-tooltip__bubble--right .alx-tooltip__arrow {
+  left: -3px;
+  top: 50%;
+  margin-top: -4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-tooltip__bubble {
+    --alx-tt-shift: 0px;
+    transition: opacity 0.12s linear;
+  }
+}

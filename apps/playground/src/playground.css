@@ -60,7 +60,11 @@
 }
 .pg-seg-btn[data-active] {
   background: var(--accent);
-  color: var(--accent-ink);
+  color: var(--accent-text);
+}
+.pg-seg-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .pg-main {
@@ -91,7 +95,7 @@
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-fg);
 }
 .pg-h2 {
   font-family: var(--font-display);

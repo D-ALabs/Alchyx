@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "./cn";
 
-export interface VisuallyHiddenProps extends React.HTMLAttributes<HTMLSpanElement> {}
+export type VisuallyHiddenProps = React.HTMLAttributes<HTMLSpanElement>;
 
 /**
  * VisuallyHidden — visually hides content while keeping it available to screen

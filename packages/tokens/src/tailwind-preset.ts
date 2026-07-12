@@ -1,5 +1,5 @@
 /**
- * @alchyx/tokens/tailwind — Tailwind CSS preset (adapter).
+ * @alchyx/tokens/tailwind — legacy Tailwind CSS v3 preset (adapter).
  *
  * Every value points at an Alchyx CSS variable, so utility classes re-tint with
  * the active skin/accent exactly like the plain-CSS components do. Import the
@@ -12,8 +12,14 @@
  * Now `bg-surface text-ink border-bd rounded-card shadow-card font-display`
  * (etc.) resolve to the D-ALabs language. Typed loosely as a plain object so
  * this package carries no dependency on `tailwindcss`.
+ *
+ * Tailwind CSS v4 projects should import `@alchyx/tokens/tailwind.css` instead.
  */
 
+/**
+ * @deprecated Tailwind CSS v3 compatibility only. Tailwind CSS v4 projects
+ * should import `@alchyx/tokens/tailwind.css` in their CSS entry point.
+ */
 export const alchyxPreset = {
   theme: {
     extend: {
@@ -39,17 +45,26 @@ export const alchyxPreset = {
         "deep-faint": "var(--deep-faint)",
         accent: {
           DEFAULT: "var(--accent)",
+          foreground: "var(--accent-fg)",
           ink: "var(--accent-ink)",
+          text: "var(--accent-text)",
           soft: "var(--accent-soft)",
         },
+        "focus-ring": "var(--focus-ring)",
         inv: {
           bg: "var(--inv-bg)",
           tx: "var(--inv-tx)",
         },
-        // fixed semantic status hues (accent-independent)
-        signal: "#13B981",
-        caution: "#D98A2B",
-        fault: "#C25E54",
+        // fixed status hues plus accessible skin-aware foreground/surface pairs
+        signal: "var(--status-signal)",
+        "signal-foreground": "var(--status-signal-foreground)",
+        "signal-surface": "var(--status-signal-surface)",
+        caution: "var(--status-caution)",
+        "caution-foreground": "var(--status-caution-foreground)",
+        "caution-surface": "var(--status-caution-surface)",
+        fault: "var(--status-fault)",
+        "fault-foreground": "var(--status-fault-foreground)",
+        "fault-surface": "var(--status-fault-surface)",
       },
       borderColor: {
         DEFAULT: "var(--bd)",

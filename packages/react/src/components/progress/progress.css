@@ -1,0 +1,83 @@
+/* Progress — linear determinate / indeterminate bar.
+   surface2 track, accent fill, pill radius, expo-eased width, reduced-motion safe. */
+.alx-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.alx-progress:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.alx-progress__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.alx-progress__label {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.alx-progress__value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sub);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.alx-progress__track {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface2);
+  border-radius: var(--radius-pill);
+}
+.alx-progress--sm .alx-progress__track {
+  height: 6px;
+}
+.alx-progress--md .alx-progress__track {
+  height: 10px;
+}
+
+.alx-progress__fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+  transition: width 0.45s var(--ease-expo);
+}
+
+/* Indeterminate — an accent block sweeps the track edge to edge. */
+.alx-progress[data-indeterminate] .alx-progress__fill {
+  width: 45%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transition: none;
+  animation: alx-progress-sweep 1.5s ease-in-out infinite;
+}
+
+@keyframes alx-progress-sweep {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(255%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-progress__fill {
+    transition: none;
+  }
+  .alx-progress[data-indeterminate] .alx-progress__fill {
+    animation: none;
+    transform: none;
+  }
+}

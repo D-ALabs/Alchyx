@@ -1,6 +1,6 @@
 {
   "name": "alchyx",
-  "version": "0.1.0",
+  "version": "0.2.0-beta.1",
   "private": true,
   "description": "Alchyx — D-ALabs' Ultimate Design System. One coherent React + TypeScript library on the D-ALabs Lab/Dark/Ark design language, consolidating the best of eight MIT design systems.",
   "license": "MIT",
@@ -11,21 +11,35 @@
     "apps/*"
   ],
   "scripts": {
+    "generate": "pnpm --filter @alchyx/react generate",
+    "generate:check": "pnpm --filter @alchyx/react generate:check",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:tokens": "pnpm --filter @alchyx/tokens test",
+    "test:react": "vitest run",
+    "test": "pnpm test:tokens && pnpm test:react",
     "playground": "pnpm --filter @alchyx/playground dev",
     "build:playground": "pnpm --filter @alchyx/playground build",
-    "build": "pnpm --filter @alchyx/tokens build && pnpm --filter @alchyx/react build"
+    "build": "pnpm --filter @alchyx/tokens build && pnpm --filter @alchyx/react build",
+    "pack:smoke": "node scripts/pack-smoke.mjs",
+    "check": "pnpm generate:check && pnpm typecheck && pnpm test && pnpm build && pnpm build:playground"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "axe-core": "^4.12.1",
+    "jsdom": "^26.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^3.2.7"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "packageManager": "pnpm@10.33.0"
 }

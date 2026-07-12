@@ -3,7 +3,9 @@
  *
  *   import "@alchyx/tokens/css";            // the CSS-variable foundation
  *   import { tokens, skins } from "@alchyx/tokens";
- *   import { alchyxPreset } from "@alchyx/tokens/tailwind";
+ *   @import "@alchyx/tokens/tailwind.css";  // Tailwind CSS v4 theme bridge
+ *
+ * `@alchyx/tokens/tailwind` remains available for Tailwind CSS v3 projects.
  */
 export * from "./tokens";
 export { alchyxPreset } from "./tailwind-preset";

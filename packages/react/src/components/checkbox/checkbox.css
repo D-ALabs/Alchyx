@@ -1,0 +1,140 @@
+/* Checkbox — visually-hidden native input + custom accent box.
+   Square control radius, spring scale-in check, dash for indeterminate. */
+.alx-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+
+/* The real input: sr-only but focusable + form-participating. */
+.alx-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.alx-checkbox__box {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1.5px solid var(--input-bd);
+  border-radius: var(--radius-control-sm);
+  transition:
+    background-color 0.25s var(--ease-expo),
+    border-color 0.25s var(--ease-expo);
+}
+
+/* Sizes */
+.alx-checkbox--md .alx-checkbox__box {
+  width: 20px;
+  height: 20px;
+}
+.alx-checkbox--sm {
+  gap: 9px;
+}
+.alx-checkbox--sm .alx-checkbox__box {
+  width: 16px;
+  height: 16px;
+}
+
+/* Hover (enabled only) */
+.alx-checkbox:not([data-disabled]):hover .alx-checkbox__box {
+  border-color: var(--bd-hov);
+}
+.alx-checkbox:not([data-disabled])[data-state="checked"]:hover .alx-checkbox__box,
+.alx-checkbox:not([data-disabled])[data-state="indeterminate"]:hover .alx-checkbox__box {
+  border-color: var(--accent);
+}
+
+/* Filled states */
+.alx-checkbox[data-state="checked"] .alx-checkbox__box,
+.alx-checkbox[data-state="indeterminate"] .alx-checkbox__box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Check glyph — springs in from a scaled-down state. */
+.alx-checkbox__check {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  fill: none;
+  stroke: var(--accent-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    transform 0.35s var(--ease-spring),
+    opacity 0.18s ease;
+}
+.alx-checkbox[data-state="checked"] .alx-checkbox__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Dash — shown for the indeterminate / mixed state. */
+.alx-checkbox__dash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 58%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent-ink);
+  opacity: 0;
+  transform: translate(-50%, -50%) scaleX(0.4);
+  transition:
+    transform 0.3s var(--ease-spring),
+    opacity 0.18s ease;
+}
+.alx-checkbox[data-state="indeterminate"] .alx-checkbox__dash {
+  opacity: 1;
+  transform: translate(-50%, -50%) scaleX(1);
+}
+
+/* Label */
+.alx-checkbox__label {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.alx-checkbox--sm .alx-checkbox__label {
+  font-size: 14px;
+}
+
+/* Focus ring on the box for keyboard users. */
+.alx-checkbox__input:focus-visible ~ .alx-checkbox__box {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Disabled */
+.alx-checkbox[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-checkbox__box,
+  .alx-checkbox__check,
+  .alx-checkbox__dash {
+    transition: none;
+  }
+}

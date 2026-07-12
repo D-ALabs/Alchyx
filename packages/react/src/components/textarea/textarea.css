@@ -1,0 +1,111 @@
+/* Textarea — multiline field anatomy: label · control · hint/error.
+   Mirrors Input's inset well (surface2), 11px control radius, accent focus
+   ring; adds an auto-resize mode that suppresses the native resize handle. */
+.alx-textarea-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.alx-textarea-field__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.alx-textarea-field__hint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sub);
+}
+.alx-textarea-field__error {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--status-fault-foreground);
+}
+
+/* Control well */
+.alx-textarea {
+  display: block;
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.alx-textarea:hover {
+  border-color: var(--bd-hov);
+}
+.alx-textarea:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.alx-textarea--invalid,
+.alx-textarea--invalid:hover {
+  border-color: var(--status-fault);
+}
+.alx-textarea--invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-fault) 22%, transparent);
+}
+.alx-textarea--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Sizes — padding lives on the well so the field fills it edge to edge. */
+.alx-textarea--sm {
+  padding: 8px 12px;
+  border-radius: var(--radius-control-sm);
+}
+.alx-textarea--md {
+  padding: 12px 15px;
+}
+.alx-textarea--lg {
+  padding: 15px 18px;
+}
+
+/* The real <textarea> */
+.alx-textarea__field {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 4.5em;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.alx-textarea--lg .alx-textarea__field {
+  font-size: 16px;
+}
+.alx-textarea--sm .alx-textarea__field {
+  font-size: 14px;
+}
+.alx-textarea__field::placeholder {
+  color: var(--faint);
+}
+.alx-textarea__field:disabled {
+  cursor: not-allowed;
+}
+/* Keyboard focus is carried by the well's :focus-within ring above; keep the
+   native per-element outline from doubling it. */
+.alx-textarea__field:focus-visible {
+  outline: none;
+}
+/* Auto-resize: JS drives the height, so the manual handle + scrollbar go away. */
+.alx-textarea__field[data-auto-resize] {
+  resize: none;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-textarea {
+    transition: none;
+  }
+}

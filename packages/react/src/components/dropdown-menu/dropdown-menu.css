@@ -1,0 +1,96 @@
+/* DropdownMenu — a floating menu surface under a trigger button.
+   Surface card radius, mono-caps label, accent-soft highlight, calm entrance.
+   Positioning is applied inline (fixed, aligned to the trigger); this file only
+   styles the surface so the parts can also snapshot statically. */
+.alx-menu {
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  min-width: 12rem;
+  max-width: min(90vw, 22rem);
+  max-height: min(60vh, 24rem);
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-card);
+  box-shadow: var(--sh-card);
+  outline: none;
+  animation: alx-menu-in 0.18s var(--ease-expo) both;
+}
+
+/* Items */
+.alx-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--ink);
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-control-sm);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.alx-menu__item:hover:not([data-disabled]),
+.alx-menu__item:focus:not([data-disabled]) {
+  background: var(--accent-soft);
+  color: var(--ink);
+  outline: none;
+}
+.alx-menu__item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+.alx-menu__item[data-disabled] {
+  color: var(--faint);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Separator */
+.alx-menu__separator {
+  height: 1px;
+  margin: 6px 8px;
+  background: var(--bd);
+}
+
+/* Label */
+.alx-menu__label {
+  padding: 8px 12px 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+@keyframes alx-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-menu {
+    animation: none;
+  }
+  .alx-menu__item {
+    transition: none;
+  }
+}

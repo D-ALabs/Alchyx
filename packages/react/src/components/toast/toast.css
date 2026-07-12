@@ -1,0 +1,157 @@
+/* Toast — transient notifications on a deep band (Radix Primitives model, Sonner
+   queue ergonomics, Fluent UI status ramp). Cards sit on --deep with the deep
+   text ramp and slide+fade in from the right edge. */
+
+/* Fixed viewport, pinned bottom-right. pointer-events pass through the gaps so
+   the empty region never blocks the page; each toast re-enables them. */
+.alx-toast__viewport {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: max-content;
+  max-width: min(420px, calc(100vw - 32px));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.alx-toast {
+  --alx-toast-hue: var(--accent);
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 340px;
+  max-width: 100%;
+  padding: 15px 16px 15px 19px;
+  background: var(--deep);
+  color: var(--deep-ink);
+  border: 1px solid color-mix(in srgb, var(--deep-ink) 12%, transparent);
+  border-radius: var(--radius-card);
+  box-shadow: 0 26px 60px -30px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+/* Status accent — a full-height bar on the leading edge. */
+.alx-toast__accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--alx-toast-hue);
+}
+
+.alx-toast--info {
+  --alx-toast-hue: var(--accent);
+}
+.alx-toast--signal {
+  --alx-toast-hue: var(--status-signal);
+}
+.alx-toast--caution {
+  --alx-toast-hue: var(--status-caution);
+}
+.alx-toast--fault {
+  --alx-toast-hue: var(--status-fault);
+}
+
+.alx-toast__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.alx-toast__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--deep-ink);
+}
+.alx-toast__desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--deep-sub);
+}
+
+/* Icon-only close — quiet on the deep band, brightens on hover/focus. */
+.alx-toast__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: -3px -3px 0 4px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  color: var(--deep-faint);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-control-sm);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+.alx-toast__close:hover {
+  color: var(--deep-ink);
+  background: color-mix(in srgb, var(--deep-ink) 12%, transparent);
+}
+.alx-toast__close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  color: var(--deep-ink);
+}
+
+/* Enter / exit — slide from the right + fade. */
+.alx-toast[data-state="open"] {
+  animation: alx-toast-in 0.32s var(--ease-expo) both;
+}
+.alx-toast[data-state="closed"] {
+  animation: alx-toast-out 0.22s var(--ease-expo) both;
+}
+
+@keyframes alx-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(26px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes alx-toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(26px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-toast[data-state="open"],
+  .alx-toast[data-state="closed"] {
+    animation: none;
+  }
+  /* Still visually remove a dismissing toast before the queue drops it. */
+  .alx-toast[data-state="closed"] {
+    opacity: 0;
+  }
+  .alx-toast__close {
+    transition: none;
+  }
+}

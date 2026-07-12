@@ -1,28 +1,37 @@
 {
   "name": "@alchyx/react",
-  "version": "0.1.0",
+  "version": "0.2.0-beta.1",
   "description": "Alchyx React component library — the D-ALabs design language as accessible, headless-behavior React components. Consolidates the best of eight MIT design systems.",
   "license": "MIT",
   "type": "module",
-  "sideEffects": ["*.css"],
+  "sideEffects": ["**/*.css"],
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
     },
-    "./styles.css": "./src/index.css"
+    "./styles.css": "./dist/index.css"
   },
-  "files": ["src", "dist"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "README.md"],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean --external react,react-dom",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "generate": "node scripts/generate-entries.mjs",
+    "generate:check": "node scripts/generate-entries.mjs --check",
+    "build": "pnpm generate:check && tsup",
+    "test": "pnpm --filter @alchyx/tokens build && pnpm build && node scripts/verify-contracts.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "pnpm typecheck && pnpm test"
   },
   "dependencies": {
     "@alchyx/tokens": "workspace:*"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

@@ -1,0 +1,51 @@
+/* Spinner — indeterminate loading ring.
+   One accent arc with a transparent top segment, spun on the global alx-spin
+   keyframe. Sizes tune diameter + stroke together so the gap reads at any scale. */
+.alx-spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 0;
+}
+
+/* Defensive: a Spinner is inert by default, but if a consumer makes it
+   focusable (tabIndex) keyboard users still get a visible ring. */
+.alx-spinner:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-pill);
+}
+
+.alx-spinner__ring {
+  box-sizing: border-box;
+  display: block;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--accent);
+  border-top-color: transparent;
+  animation: alx-spin 0.7s linear infinite;
+}
+
+/* Sizes — diameter + stroke */
+.alx-spinner--sm .alx-spinner__ring {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+.alx-spinner--md .alx-spinner__ring {
+  width: 24px;
+  height: 24px;
+  border-width: 2.5px;
+}
+.alx-spinner--lg .alx-spinner__ring {
+  width: 36px;
+  height: 36px;
+  border-width: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-spinner__ring {
+    animation-duration: 1.4s;
+  }
+}

@@ -1,0 +1,79 @@
+/* Table — TB-01 styled table primitives from the D-ALabs component recipes.
+   GitHub Primer hairline anatomy + Ant Design column ergonomics on the Twilio
+   Paste scroll-container pattern: a bordered radius-card surface, a --surface2
+   mono-caps header band, --bd2 hairline row dividers, and a calm hover fill. */
+.alx-table {
+  max-width: 100%;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-card);
+  -webkit-overflow-scrolling: touch;
+}
+/* Only fires when a consumer makes the scroll region keyboard-focusable
+   (tabIndex) so wide tables can be panned from the keyboard. */
+.alx-table:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.alx-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink2);
+  text-align: left;
+}
+
+/* Column headers — the signature mono-caps layer on a quiet inset band. */
+.alx-table__head {
+  padding: 12px 18px;
+  background: var(--surface2);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--sub);
+  border-bottom: 1px solid var(--bd);
+}
+
+/* Data cells. */
+.alx-table__cell {
+  padding: 14px 18px;
+  vertical-align: middle;
+  color: var(--ink2);
+}
+
+/* Rows — hairline dividers between body rows; header rows carry no divider
+   (the header cells own their stronger --bd bottom border). */
+.alx-table__row {
+  border-bottom: 1px solid var(--bd2);
+  transition: background-color 0.2s ease;
+}
+.alx-table__header .alx-table__row {
+  border-bottom: none;
+}
+.alx-table__body .alx-table__row:last-child {
+  border-bottom: none;
+}
+
+/* Opt-in subtle hover fill for scannable body rows. */
+.alx-table__row--hover:hover {
+  background: var(--surface2);
+}
+/* Fires only when a consumer makes a row interactive (tabIndex / onClick). */
+.alx-table__row:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-table__row {
+    transition: none;
+  }
+}

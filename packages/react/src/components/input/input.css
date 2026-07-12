@@ -1,0 +1,102 @@
+/* Input + field anatomy — label · control · hint/error.
+   Translucent inset well (surface2), 11px control radius, accent focus ring. */
+.alx-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.alx-field__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.alx-field__hint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sub);
+}
+.alx-field__error {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--status-fault-foreground);
+}
+
+.alx-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.alx-input:hover {
+  border-color: var(--bd-hov);
+}
+.alx-input:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.alx-input--invalid,
+.alx-input--invalid:hover {
+  border-color: var(--status-fault);
+}
+.alx-input--invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-fault) 22%, transparent);
+}
+.alx-input--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.alx-input--sm {
+  padding: 8px 12px;
+  border-radius: var(--radius-control-sm);
+}
+.alx-input--md {
+  padding: 12px 15px;
+}
+.alx-input--lg {
+  padding: 15px 18px;
+}
+
+.alx-input__field {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.alx-input--lg .alx-input__field {
+  font-size: 16px;
+}
+.alx-input--sm .alx-input__field {
+  font-size: 14px;
+}
+.alx-input__field::placeholder {
+  color: var(--faint);
+}
+.alx-input__field:disabled {
+  cursor: not-allowed;
+}
+
+.alx-input__adorn {
+  display: inline-flex;
+  align-items: center;
+  color: var(--faint);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.alx-input__adorn--trail {
+  color: var(--sub);
+}

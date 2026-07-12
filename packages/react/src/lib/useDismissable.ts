@@ -1,9 +1,12 @@
 import * as React from "react";
+import { isTopmostOverlayLayer, registerOverlayLayer } from "./overlayStack";
 
 export interface UseDismissableOptions {
   enabled?: boolean;
   onEscapeKeyDown?: (event: KeyboardEvent) => void;
   onPointerDownOutside?: (event: PointerEvent) => void;
+  /** Whether this layer temporarily owns focus handling over a parent focus trap. Default true. */
+  blocksParentFocusTrap?: boolean;
 }
 
 /**
@@ -13,8 +16,14 @@ export interface UseDismissableOptions {
  */
 export function useDismissable(
   ref: React.RefObject<HTMLElement | null>,
-  { enabled = true, onEscapeKeyDown, onPointerDownOutside }: UseDismissableOptions,
+  {
+    enabled = true,
+    onEscapeKeyDown,
+    onPointerDownOutside,
+    blocksParentFocusTrap = true,
+  }: UseDismissableOptions,
 ) {
+  const layerId = React.useRef(Symbol("alchyx-overlay-layer"));
   const escRef = React.useRef(onEscapeKeyDown);
   const outsideRef = React.useRef(onPointerDownOutside);
   React.useEffect(() => {
@@ -24,11 +33,19 @@ export function useDismissable(
 
   React.useEffect(() => {
     if (!enabled) return;
+    return registerOverlayLayer({ id: layerId.current, ref, blocksParentFocusTrap });
+  }, [enabled, ref, blocksParentFocusTrap]);
+
+  React.useEffect(() => {
+    if (!enabled) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") escRef.current?.(event);
+      if (event.key === "Escape" && isTopmostOverlayLayer(layerId.current)) {
+        escRef.current?.(event);
+      }
     };
     const handlePointerDown = (event: PointerEvent) => {
+      if (!isTopmostOverlayLayer(layerId.current)) return;
       const el = ref.current;
       if (el && !el.contains(event.target as Node)) {
         outsideRef.current?.(event);

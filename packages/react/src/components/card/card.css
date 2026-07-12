@@ -1,0 +1,88 @@
+/* Card — CD-01 surface from the D-ALabs component recipes.
+   --surface fill, --bd hairline, 16px card radius. `interactive` adds a calm
+   expo hover-lift + --sh-card and a keyboard focus ring. */
+.alx-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-card);
+  text-decoration: none;
+}
+
+/* Parts */
+.alx-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 24px;
+  padding-bottom: 0;
+}
+
+.alx-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.alx-card__description {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sub);
+}
+
+.alx-card__content {
+  padding: 18px 24px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink2);
+}
+
+.alx-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 24px;
+  padding-top: 0;
+  margin-top: auto;
+}
+
+/* Interactive surface */
+.alx-card--interactive {
+  cursor: pointer;
+  transition:
+    transform 0.4s var(--ease-expo),
+    box-shadow 0.4s var(--ease-expo),
+    border-color 0.25s ease;
+}
+.alx-card--interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-card);
+  border-color: var(--bd-hov);
+}
+.alx-card--interactive:active {
+  transform: translateY(-1px);
+}
+.alx-card--interactive:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-card--interactive,
+  .alx-card--interactive:hover,
+  .alx-card--interactive:active {
+    transform: none;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+}

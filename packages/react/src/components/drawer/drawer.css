@@ -1,0 +1,155 @@
+/* Drawer — dimmed overlay + edge-anchored sheet, panel radius 18px.
+   Reuses the Dialog primitive stack but slides in from a side. */
+.alx-drawer__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: color-mix(in srgb, var(--deep2) 62%, transparent);
+  backdrop-filter: blur(3px);
+  animation: alx-overlay-in 0.3s var(--ease-expo) both;
+}
+
+.alx-drawer__panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.6);
+  padding: 28px;
+  outline: none;
+}
+.alx-drawer__panel:focus-visible {
+  outline: none;
+}
+
+/* Edge anchoring — thickness (width/height) comes from the inline `size` prop. */
+.alx-drawer__panel--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-top-left-radius: var(--radius-panel);
+  border-bottom-left-radius: var(--radius-panel);
+  border-right: none;
+  animation: alx-drawer-in-right 0.42s var(--ease-expo) both;
+}
+.alx-drawer__panel--left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-top-right-radius: var(--radius-panel);
+  border-bottom-right-radius: var(--radius-panel);
+  border-left: none;
+  animation: alx-drawer-in-left 0.42s var(--ease-expo) both;
+}
+.alx-drawer__panel--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-bottom-left-radius: var(--radius-panel);
+  border-bottom-right-radius: var(--radius-panel);
+  border-top: none;
+  animation: alx-drawer-in-top 0.42s var(--ease-expo) both;
+}
+.alx-drawer__panel--bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-top-left-radius: var(--radius-panel);
+  border-top-right-radius: var(--radius-panel);
+  border-bottom: none;
+  animation: alx-drawer-in-bottom 0.42s var(--ease-expo) both;
+}
+
+.alx-drawer__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.alx-drawer__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0;
+}
+.alx-drawer__desc {
+  color: var(--sub);
+  line-height: 1.6;
+  margin: 0;
+}
+.alx-drawer__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 26px;
+}
+
+@keyframes alx-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes alx-drawer-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes alx-drawer-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes alx-drawer-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes alx-drawer-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-drawer__overlay,
+  .alx-drawer__panel--right,
+  .alx-drawer__panel--left,
+  .alx-drawer__panel--top,
+  .alx-drawer__panel--bottom {
+    animation: alx-overlay-in 0.2s ease both;
+  }
+}

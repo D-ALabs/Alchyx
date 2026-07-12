@@ -1,16 +1,24 @@
-import * as React from "react";
-import { cn } from "../lib/cn";
+"use client";
 
-export type Skin = "lab" | "dark" | "ark";
-export type Accent =
-  | "monochrome"
-  | "paper"
-  | "gold"
-  | "mint"
-  | "blue"
-  | "amber"
-  | "ivory"
-  | "bronze";
+import * as React from "react";
+import {
+  accentsBySkin,
+  defaultAccentBySkin,
+  type AccentName,
+  type SkinName,
+} from "@alchyx/tokens";
+import { cn } from "../lib/cn";
+import { PortalScopeProvider, type PortalProps } from "../lib/Portal";
+
+export type Skin = SkinName;
+export type Accent = AccentName;
+export { defaultAccentBySkin };
+
+/** Keep an explicit accent valid when consumers switch between skin families. */
+export function normalizeAccent(skin: Skin, accent: Accent | undefined): Accent | undefined {
+  if (accent === undefined) return undefined;
+  return accentsBySkin[skin].includes(accent) ? accent : defaultAccentBySkin[skin];
+}
 
 export interface AlchyxContextValue {
   skin: Skin;
@@ -50,6 +58,8 @@ export interface AlchyxProviderProps {
   as?: "wrapper" | "html";
   className?: string;
   style?: React.CSSProperties;
+  /** Default target for overlays rendered by Portal. Defaults to document.body. */
+  portalContainer?: PortalProps["container"];
 }
 
 /**
@@ -68,6 +78,7 @@ export function AlchyxProvider({
   as = "wrapper",
   className,
   style,
+  portalContainer,
 }: AlchyxProviderProps) {
   const [uncontrolledSkin, setUncontrolledSkin] = React.useState<Skin>(defaultSkin);
   const [uncontrolledAccent, setUncontrolledAccent] = React.useState<Accent | undefined>(
@@ -75,22 +86,29 @@ export function AlchyxProvider({
   );
 
   const skin = controlledSkin ?? uncontrolledSkin;
-  const accent = controlledAccent ?? uncontrolledAccent;
+  const requestedAccent = controlledAccent ?? uncontrolledAccent;
+  const accent = normalizeAccent(skin, requestedAccent);
 
   const setSkin = React.useCallback(
     (next: Skin) => {
       if (controlledSkin === undefined) setUncontrolledSkin(next);
+      const normalizedAccent = normalizeAccent(next, requestedAccent);
+      if (controlledAccent === undefined && normalizedAccent !== requestedAccent) {
+        setUncontrolledAccent(normalizedAccent);
+      }
       onSkinChange?.(next);
+      if (normalizedAccent !== requestedAccent) onAccentChange?.(normalizedAccent);
     },
-    [controlledSkin, onSkinChange],
+    [controlledSkin, controlledAccent, requestedAccent, onSkinChange, onAccentChange],
   );
 
   const setAccent = React.useCallback(
     (next: Accent | undefined) => {
-      if (controlledAccent === undefined) setUncontrolledAccent(next);
-      onAccentChange?.(next);
+      const normalized = normalizeAccent(skin, next);
+      if (controlledAccent === undefined) setUncontrolledAccent(normalized);
+      onAccentChange?.(normalized);
     },
-    [controlledAccent, onAccentChange],
+    [controlledAccent, skin, onAccentChange],
   );
 
   // When applying to <html>, drive the document attributes via effect.
@@ -117,18 +135,25 @@ export function AlchyxProvider({
 
   return (
     <AlchyxContext.Provider value={value}>
-      {as === "wrapper" ? (
-        <div
-          className={cn("alx-root", className)}
-          data-theme={skin}
-          data-accent={accent}
-          style={style}
-        >
-          {children}
-        </div>
-      ) : (
-        children
-      )}
+      <PortalScopeProvider
+        container={portalContainer}
+        theme={skin}
+        accent={accent}
+        scoped={as === "wrapper"}
+      >
+        {as === "wrapper" ? (
+          <div
+            className={cn("alx-root", className)}
+            data-theme={skin}
+            data-accent={accent}
+            style={style}
+          >
+            {children}
+          </div>
+        ) : (
+          children
+        )}
+      </PortalScopeProvider>
     </AlchyxContext.Provider>
   );
 }

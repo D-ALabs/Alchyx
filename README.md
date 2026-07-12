@@ -8,7 +8,7 @@ D-ALabs' Ultimate Design System — one coherent **React + TypeScript** library 
 D-ALabs **Lab / Dark / Ark** design language, consolidating the best of eight
 MIT-licensed design systems into a single API.
 
-`MIT` · `alpha (0.1.0)` · by **D-ALabs, LLC**
+`MIT` · `0.2.0-beta.1` · by **D-ALabs, LLC**
 
 </div>
 
@@ -45,30 +45,30 @@ differently. Alchyx takes the strongest ideas from **eight** of them —
   accent per surface, fixed semantic status hues, and slow, deliberate motion
   that always honors `prefers-reduced-motion`.
 - **Plain CSS *and* Tailwind.** Components ship as plain CSS over the token
-  variables, and `@alchyx/tokens/tailwind` maps every token to a Tailwind preset
-  so utility classes re-tint the same way.
+  variables. Tailwind CSS 4 consumes the CSS-first theme bridge; the original
+  Tailwind 3 preset remains as a deprecated compatibility adapter.
 
 ## Packages
 
 | Package | What it is |
 |---|---|
-| [`@alchyx/tokens`](packages/tokens) | The D-ALabs language, framework-agnostic: CSS-variable skins (Lab/Dark/Ark + accents), reset, fonts, keyframes, utilities, a typed token object, and the Tailwind preset. |
-| [`@alchyx/react`](packages/react) | The React component library + headless behavior primitives (`Slot`/`asChild`, controllable state, focus trap, portal, dismissable layer) and `AlchyxProvider`. |
+| [`@alchyx/tokens`](packages/tokens) | Framework-agnostic Lab/Dark/Ark tokens, accessible accent/status roles, CSS foundation, typed values, and Tailwind 3/4 adapters. |
+| [`@alchyx/react`](packages/react) | 31 React components, form-aware controls, nested overlay coordination, behavior primitives, and `AlchyxProvider`. |
 | `@alchyx/cli` *(planned)* | Scaffolding + component sync. Global binary **`alchyx`** (see [CLI](#cli)). |
-| [`apps/playground`](apps/playground) | A Vite gallery that renders every component across all three skins with a live accent switcher. |
+| [`apps/playground`](apps/playground) | A focused Vite integration harness for Button, package CSS, all three skins, and live accent switching. |
 
 ## Install
 
 ```bash
 pnpm add @alchyx/react @alchyx/tokens
-# peers: react >= 18, react-dom >= 18
+# peers: react >= 18 < 20, react-dom >= 18 < 20
 ```
 
 ## Quick start
 
 ```tsx
 import "@alchyx/tokens/css";        // design-token variables (once, at your root)
-import "@alchyx/react/styles.css";  // component styles
+import "@alchyx/react/styles.css";  // all component styles
 import { AlchyxProvider, Button } from "@alchyx/react";
 
 export function App() {
@@ -114,7 +114,18 @@ Accents per skin — **Lab:** monochrome · mint · blue · amber ·
 Provider works controlled or uncontrolled, and can drive the document `<html>`
 instead of a wrapper (`as="html"`).
 
-## Tailwind (optional)
+## Tailwind CSS 4 (optional)
+
+```css
+@import "tailwindcss";
+@import "@alchyx/tokens/css";
+@import "@alchyx/tokens/tailwind.css";
+```
+
+Utilities such as `bg-surface`, `text-ink`, `border-bd`, `rounded-card`, and
+`font-display` now read the active skin variables.
+
+### Tailwind CSS 3 compatibility
 
 ```js
 // tailwind.config.js
@@ -126,10 +137,8 @@ export default {
 };
 ```
 
-```tsx
-// utilities now resolve to the active skin/accent:
-<div className="bg-surface text-ink border border-bd rounded-card shadow-card font-display">…</div>
-```
+`@alchyx/tokens/tailwind` is deprecated and remains available through the 0.x
+line for existing Tailwind CSS 3 consumers.
 
 ## Design tokens
 
@@ -137,30 +146,42 @@ The token contract (identical across all three skins) is documented in
 [`packages/tokens`](packages/tokens/src/css/tokens.css) and mirrored as typed JS:
 
 ```ts
-import { tokens, skins, accentsBySkin, status, radius } from "@alchyx/tokens";
+import {
+  skins,
+  getAccentPalette,
+  statusPalettes,
+  radius,
+} from "@alchyx/tokens";
 skins.ark.accent;         // "#D9AE63"
-status.signal;            // "#13B981" — Signal / Live / pass
+getAccentPalette("ark", "amber").accent; // "#E2A338"
+statusPalettes.lab.signal.foreground;      // accessible status text
 radius.card;              // 16
 ```
 
 Colors step, they don't jump: `--ink → --sub → --faint` for text,
 `--bg → --surface → --surface2` for backgrounds, `--bd → --bd2 → --bd-hov` for
-lines, one `--accent` (+ `--accent-ink`, `--accent-soft`). Full reference:
+lines, one `--accent` plus role-specific `--accent-fg` (accent copy),
+`--accent-text` (copy on an accent fill), and `--focus-ring`. Semantic statuses
+pair solid indicator hues with `--status-*-foreground` and `--status-*-surface`.
+Full reference:
 [`docs/COMPONENT_SPEC.md`](docs/COMPONENT_SPEC.md).
 
 ## Components
 
-Shipped in `0.1.0`:
+Available in `0.2.0-beta.1`:
 
-- **Foundations** — `AlchyxProvider` / `useAlchyx`, `Slot` (`asChild`), `Portal`,
-  `VisuallyHidden`, `useControllableState`, `useId`, `useComposedRefs`,
-  `useDismissable`, `useFocusTrap`, `useScrollLock`.
-- **Button** — variants (primary / secondary / ghost / inverse / link), sizes,
-  `asChild`, `loading`.
+- **Stable** — Alert, Avatar, Badge, Breadcrumbs, Button, Card, Checkbox,
+  IconButton, Input, Kbd, Pagination, Progress, Select, Separator, Skeleton,
+  Spinner, Stat, Table, Tag, and Textarea.
+- **Beta** — Accordion, Dialog, Drawer, DropdownMenu, RadioGroup,
+  SegmentedControl, Slider, Switch, Tabs, Toast, and Tooltip.
+- **Foundations** — `AlchyxProvider` / `useAlchyx`, `Slot`, provider-aware
+  `Portal`, controllable state, focus trapping, top-layer dismissal, and
+  reference-counted scroll locking.
 
-On the roadmap for `0.1` (core set): Label, Separator, Badge, Card, Avatar,
-Skeleton, Spinner, Progress, Alert, IconButton, Input, Textarea, Checkbox,
-Switch, RadioGroup, Select, Tabs, Accordion, Breadcrumb, Tooltip, Dialog, Toast.
+Custom form controls participate in native `FormData` and form reset through
+`name`, `value`, `required`, `disabled`, and `form` props. Beta marks API
+maturity, not an exemption from keyboard or accessibility requirements.
 
 New components follow the authoring contract in
 [`docs/COMPONENT_SPEC.md`](docs/COMPONENT_SPEC.md).
@@ -199,8 +220,10 @@ pnpm install
 pnpm playground     # Vite dev server → http://localhost:5173
 ```
 
-Toggle Lab / Dark / Ark and the accent set live; every component is shown as a
-labeled specimen in the D-ALabs card frame.
+Toggle Lab / Dark / Ark and each skin's accent set live while checking Button's
+variants, sizes, loading state, and `asChild` integration. The full 31-component
+catalog lives in the Alchyx documentation site; this app stays deliberately
+small so it remains a fast workspace/package smoke test.
 
 ## Repository layout
 
@@ -210,7 +233,7 @@ alchyx/
 │   ├── tokens/      @alchyx/tokens — CSS variables · typed tokens · Tailwind preset
 │   └── react/       @alchyx/react  — components + headless behavior primitives
 ├── apps/
-│   └── playground/  Vite gallery (3 skins, accent switcher)
+│   └── playground/  focused Vite integration harness (3 skins + accents)
 ├── docs/
 │   └── COMPONENT_SPEC.md   component authoring contract (token list, a11y rules)
 ├── LICENSE          MIT © 2026 D-ALabs
@@ -224,6 +247,9 @@ Requires **Node ≥ 18** and **pnpm 10**.
 ```bash
 pnpm install
 pnpm typecheck            # strict TS across the workspace
+pnpm test                 # token contracts + DOM/interaction/a11y tests
+pnpm check                # generated files, types, tests, and builds
+pnpm pack:smoke           # packed-package installs on React 18 and React 19
 pnpm playground          # dev server (HMR)
 pnpm build               # build @alchyx/tokens + @alchyx/react
 pnpm build:playground    # static build of the gallery

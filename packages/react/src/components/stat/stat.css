@@ -1,0 +1,81 @@
+/* Stat — a statistic block. Mono-caps label, a big display numeral in the
+   dedicated --stat hue, and a trend-colored delta signal.
+   Lineage: Ant Design Statistic, Fluent UI metric tile. */
+.alx-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.alx-stat:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-card);
+}
+
+.alx-stat__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.alx-stat__body {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+.alx-stat__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--stat);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s var(--ease-expo);
+}
+
+.alx-stat__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--sub);
+  transition: color 0.3s ease;
+}
+.alx-stat__delta--up {
+  color: var(--status-signal-foreground);
+}
+.alx-stat__delta--down {
+  color: var(--status-fault-foreground);
+}
+.alx-stat__delta--flat {
+  color: var(--faint);
+}
+
+.alx-stat__arrow {
+  font-size: 13px;
+  line-height: 0;
+}
+
+.alx-stat__hint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sub);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-stat__value,
+  .alx-stat__delta {
+    transition: none;
+  }
+}

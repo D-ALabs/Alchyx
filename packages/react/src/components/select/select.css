@@ -1,0 +1,146 @@
+/* Select — a native <select> in the shared field anatomy + a custom chevron.
+   Translucent inset well (surface2), 11px control radius, accent focus ring.
+   Mirrors the Input control so form fields read as one system. */
+
+/* --- Shared field anatomy (label · hint · error) ------------------------- */
+.alx-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.alx-field__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.alx-field__hint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sub);
+}
+.alx-field__error {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--status-fault-foreground);
+}
+
+/* --- Control well -------------------------------------------------------- */
+.alx-select {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.alx-select:hover {
+  border-color: var(--bd-hov);
+}
+.alx-select:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.alx-select--invalid,
+.alx-select--invalid:hover {
+  border-color: var(--status-fault);
+}
+.alx-select--invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-fault) 22%, transparent);
+}
+.alx-select--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Radius: compact size uses the tighter control radius. */
+.alx-select--sm {
+  border-radius: var(--radius-control-sm);
+}
+
+/* --- Native select ------------------------------------------------------- */
+.alx-select__field {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+/* The native select handles its own focus indication; the well draws the ring
+   via :focus-within (keyboard focus on a <select> matches :focus-visible), so
+   suppress the doubled UA outline. */
+.alx-select__field:focus,
+.alx-select__field:focus-visible {
+  outline: none;
+}
+.alx-select__field:disabled {
+  cursor: not-allowed;
+}
+
+/* Padding leaves room for the chevron on the trailing edge. */
+.alx-select--md .alx-select__field {
+  padding: 12px 40px 12px 15px;
+}
+.alx-select--sm .alx-select__field {
+  padding: 8px 36px 8px 12px;
+  font-size: 14px;
+}
+.alx-select--lg .alx-select__field {
+  padding: 15px 44px 15px 18px;
+  font-size: 16px;
+}
+
+/* Fade the control text while the disabled placeholder option is the one shown. */
+.alx-select__field:has(option:disabled:checked) {
+  color: var(--faint);
+}
+
+/* Theme the dropdown list where the platform honours it (Firefox / Windows). */
+.alx-select__field option {
+  color: var(--ink);
+  background: var(--surface);
+}
+.alx-select__field option:disabled {
+  color: var(--faint);
+}
+
+/* --- Chevron adornment --------------------------------------------------- */
+.alx-select__chevron {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  color: var(--faint);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+.alx-select--sm .alx-select__chevron {
+  right: 12px;
+}
+.alx-select--lg .alx-select__chevron {
+  right: 16px;
+}
+.alx-select:focus-within .alx-select__chevron {
+  color: var(--accent);
+}
+.alx-select--invalid .alx-select__chevron {
+  color: var(--status-fault);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-select,
+  .alx-select__chevron {
+    transition: none;
+  }
+}

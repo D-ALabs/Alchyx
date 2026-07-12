@@ -1,0 +1,110 @@
+/* IconButton — a square, icon-only action mirroring Button's fills.
+   Equal padding on all sides, --radius-control, one accent, spring press. */
+.alx-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 0;
+  font-family: var(--font-sans);
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  color: var(--ink);
+  background: transparent;
+  transition:
+    transform 0.35s var(--ease-spring),
+    box-shadow 0.3s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+.alx-icon-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.alx-icon-btn:active {
+  transform: translateY(1px);
+}
+
+.alx-icon-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Sizes — square boxes so padding stays equal on every side. */
+.alx-icon-btn--sm {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-control-sm);
+}
+.alx-icon-btn--sm .alx-icon-btn__icon {
+  font-size: 15px;
+}
+.alx-icon-btn--md {
+  width: 44px;
+  height: 44px;
+}
+.alx-icon-btn--md .alx-icon-btn__icon {
+  font-size: 17px;
+}
+.alx-icon-btn--lg {
+  width: 52px;
+  height: 52px;
+}
+.alx-icon-btn--lg .alx-icon-btn__icon {
+  font-size: 20px;
+}
+
+/* Variants — mirror Button. */
+.alx-icon-btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--sh-btn);
+}
+.alx-icon-btn--primary:hover {
+  transform: translateY(-2px);
+}
+
+.alx-icon-btn--secondary {
+  border-color: var(--bd-hov);
+  color: var(--ink);
+}
+.alx-icon-btn--secondary:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.alx-icon-btn--ghost {
+  color: var(--ink);
+}
+.alx-icon-btn--ghost:hover {
+  background: var(--surface2);
+  border-color: var(--bd);
+}
+
+/* Disabled */
+.alx-icon-btn:disabled,
+.alx-icon-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.alx-icon-btn[aria-disabled="true"] {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-icon-btn,
+  .alx-icon-btn:hover,
+  .alx-icon-btn:active {
+    transform: none;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+}

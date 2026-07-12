@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { cn } from "../../lib/cn";
 import { Slot } from "../../lib/Slot";
@@ -39,6 +41,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
     children,
     disabled,
     type,
+    tabIndex,
+    onClick,
+    onKeyDown,
     ...props
   },
   ref,
@@ -55,8 +60,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
   );
 
   const nativeProps = asChild
-    ? { "aria-disabled": isDisabled || undefined }
-    : { disabled: isDisabled, type: type ?? "button" };
+    ? { "aria-disabled": isDisabled || undefined, tabIndex: isDisabled ? -1 : tabIndex }
+    : { disabled: isDisabled, type: type ?? "button", tabIndex };
 
   return (
     <Comp
@@ -66,6 +71,22 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
       aria-busy={loading || undefined}
       {...nativeProps}
       {...props}
+      onClick={(event: React.MouseEvent<HTMLElement>) => {
+        if (isDisabled) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
+        (onClick as React.MouseEventHandler<HTMLElement> | undefined)?.(event);
+      }}
+      onKeyDown={(event: React.KeyboardEvent<HTMLElement>) => {
+        if (isDisabled && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
+        (onKeyDown as React.KeyboardEventHandler<HTMLElement> | undefined)?.(event);
+      }}
     >
       {asChild ? (
         children

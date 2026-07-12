@@ -1,6 +1,6 @@
 /* ============================================================================
-   Alchyx Design Tokens — three skins in one sheet, ported 1:1 from the D-ALabs
-   design language (d-alabs-ui-index "Ultimate UI Index").
+   Alchyx Design Tokens — three skins in one sheet. Lab and Dark track the
+   current d-alabs-website neutral ramp; Ark retains its premium gold language.
 
    Default (no attribute) = LAB.
      data-theme="lab"   paper & ink    (light)
@@ -26,6 +26,14 @@
   --status-caution: #d98a2b; /* Caution / Training / drift   */
   --status-fault: #c25e54; /* Fault / error               */
 
+  /* Accessible foreground/surface pairs for status callouts. */
+  --status-signal-foreground: #087a57;
+  --status-signal-surface: #ddf4ea;
+  --status-caution-foreground: #8a4f0a;
+  --status-caution-surface: #f8e8d2;
+  --status-fault-foreground: #9f3f35;
+  --status-fault-surface: #f8e1de;
+
   /* Radius vocabulary (tight on purpose). */
   --radius-control: 11px; /* buttons, inputs, textareas   */
   --radius-control-sm: 10px; /* compact controls, squares    */
@@ -46,29 +54,29 @@
 [data-theme="lab"] {
   --bg: #f5f2ea;
   --surface: #fcfbf7;
-  --surface2: rgba(252, 251, 247, 0.55);
+  --surface2: #efebe0;
   --deep: #16202e;
   --deep2: #0e1620;
   --panel: #16202e;
-  --panel-bd: rgba(0, 0, 0, 0);
+  --panel-bd: rgba(255, 255, 255, 0.1);
   --ink: #16202e;
   --ink2: #1b2737;
   --sub: #54606e;
-  --faint: #8a93a0;
+  --faint: #5f6b79;
   --bd: #e4decf;
   --bd2: #e9e4d8;
-  --bd-hov: #cdc6b5;
+  --bd-hov: #d6cfbe;
   --stat: #16202e;
   --grid: rgba(22, 32, 46, 0.05);
   --grid-deep: rgba(255, 255, 255, 0.04);
   --deep-ink: #eeeae0;
   --deep-sub: #aeb6c0;
-  --deep-faint: #97a1ad;
+  --deep-faint: #7e8896;
   --chip-bd: rgba(238, 234, 224, 0.18);
   --chip-bg: rgba(238, 234, 224, 0.04);
   --chip-tx: #d7dce2;
-  --pill-bd: #e0dac9;
-  --pill-tx: #6b7480;
+  --pill-bd: #d6cfbe;
+  --pill-tx: #5f6b79;
   --marq: rgba(22, 32, 46, 0.4);
   --input-bd: rgba(255, 255, 255, 0.16);
   --av-bg: #16202e;
@@ -77,29 +85,50 @@
   --sh-card: 0 26px 52px -32px rgba(22, 32, 46, 0.42);
   /* accent (default: Monochrome) + derived */
   --accent: #16202e;
+  --accent-fg: #16202e;
   --accent-ink: #f5f2ea;
-  --accent-soft: rgba(22, 32, 46, 0.08);
+  --accent-text: #f5f2ea;
+  --accent-soft: rgba(22, 32, 46, 0.07);
+  --focus-ring: #16202e;
   --sh-btn: 0 12px 30px -14px rgba(22, 32, 46, 0.75);
   --inv-bg: #f5f2ea;
   --inv-tx: #16202e;
   --liquid: #16202e;
+  --status-signal-foreground: #087a57;
+  --status-signal-surface: #ddf4ea;
+  --status-caution-foreground: #8a4f0a;
+  --status-caution-surface: #f8e8d2;
+  --status-fault-foreground: #9f3f35;
+  --status-fault-surface: #f8e1de;
 }
 :root[data-accent="mint"],
 [data-theme="lab"][data-accent="mint"] {
   --accent: #13b981;
+  --accent-fg: #087a57;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(19, 185, 129, 0.15);
+  --focus-ring: #087a57;
   --sh-btn: 0 12px 30px -14px rgba(19, 185, 129, 0.75);
 }
 :root[data-accent="blue"],
 [data-theme="lab"][data-accent="blue"] {
   --accent: #3b6fe0;
+  --accent-fg: #315ec0;
+  --accent-ink: #fffdf7;
+  --accent-text: #fffdf7;
   --accent-soft: rgba(59, 111, 224, 0.15);
+  --focus-ring: #315ec0;
   --sh-btn: 0 12px 30px -14px rgba(59, 111, 224, 0.75);
 }
 :root[data-accent="amber"],
 [data-theme="lab"][data-accent="amber"] {
   --accent: #d98a2b;
+  --accent-fg: #9b5a0a;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(217, 138, 43, 0.15);
+  --focus-ring: #9b5a0a;
   --sh-btn: 0 12px 30px -14px rgba(217, 138, 43, 0.75);
 }
 
@@ -107,59 +136,80 @@
    SKIN 2 — DARK (slate & bone)
    ========================================================================== */
 [data-theme="dark"] {
-  --bg: #0d1522;
-  --surface: #131d2d;
-  --surface2: rgba(19, 29, 45, 0.55);
-  --deep: #080f1a;
-  --deep2: #060b14;
-  --panel: #0a1424;
-  --panel-bd: rgba(237, 232, 220, 0.12);
-  --ink: #ede8dc;
-  --ink2: #e4dfd2;
-  --sub: #93a1b3;
-  --faint: #6c7a8c;
-  --bd: rgba(237, 232, 220, 0.14);
-  --bd2: rgba(237, 232, 220, 0.09);
-  --bd-hov: rgba(237, 232, 220, 0.32);
-  --stat: #ede8dc;
-  --grid: rgba(237, 232, 220, 0.05);
+  --bg: #0e1620;
+  --surface: #141e2a;
+  --surface2: #0b121a;
+  --deep: #1b2736;
+  --deep2: #0a1018;
+  --panel: #1b2736;
+  --panel-bd: rgba(236, 231, 219, 0.1);
+  --ink: #ece7db;
+  --ink2: #f4f0e6;
+  --sub: #9aa4b0;
+  --faint: #7e8896;
+  --bd: rgba(236, 231, 219, 0.11);
+  --bd2: rgba(236, 231, 219, 0.07);
+  --bd-hov: rgba(236, 231, 219, 0.2);
+  --stat: #ece7db;
+  --grid: rgba(236, 231, 219, 0.05);
   --grid-deep: rgba(255, 255, 255, 0.04);
-  --deep-ink: #ede8dc;
-  --deep-sub: #a5b1c0;
-  --deep-faint: #7e8a99;
-  --chip-bd: rgba(237, 232, 220, 0.18);
-  --chip-bg: rgba(237, 232, 220, 0.05);
-  --chip-tx: #d7dce2;
-  --pill-bd: rgba(237, 232, 220, 0.22);
-  --pill-tx: #a5b1c0;
-  --marq: rgba(237, 232, 220, 0.4);
-  --input-bd: rgba(237, 232, 220, 0.18);
-  --av-bg: #ede8dc;
+  --deep-ink: #ece7db;
+  --deep-sub: #9aa4b0;
+  --deep-faint: #6e7884;
+  --chip-bd: rgba(236, 231, 219, 0.18);
+  --chip-bg: rgba(236, 231, 219, 0.05);
+  --chip-tx: #ece7db;
+  --pill-bd: rgba(236, 231, 219, 0.2);
+  --pill-tx: #9aa4b0;
+  --marq: rgba(236, 231, 219, 0.4);
+  --input-bd: rgba(236, 231, 219, 0.18);
+  --av-bg: #ece7db;
   --av-tx: #16202e;
   --av-bd: rgba(0, 0, 0, 0);
   --sh-card: 0 28px 54px -30px rgba(0, 0, 0, 0.7);
   /* accent (default: Paper) + derived */
-  --accent: #eeeae0;
+  --accent: #ece7db;
+  --accent-fg: #ece7db;
   --accent-ink: #16202e;
-  --accent-soft: rgba(238, 234, 224, 0.15);
-  --sh-btn: 0 14px 34px -16px rgba(238, 234, 224, 0.35);
-  --inv-bg: #f5f2ea;
+  --accent-text: #16202e;
+  --accent-soft: rgba(236, 231, 219, 0.08);
+  --focus-ring: #ece7db;
+  --sh-btn: 0 14px 34px -16px rgba(236, 231, 219, 0.35);
+  --inv-bg: #ece7db;
   --inv-tx: #16202e;
   --liquid: #e9dfd1;
+  --status-signal-foreground: #6fe0ba;
+  --status-signal-surface: #123a32;
+  --status-caution-foreground: #f2b66d;
+  --status-caution-surface: #3b2d1d;
+  --status-fault-foreground: #ffb4aa;
+  --status-fault-surface: #3b2427;
 }
 [data-theme="dark"][data-accent="mint"] {
   --accent: #13b981;
+  --accent-fg: #6fe0ba;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(19, 185, 129, 0.15);
+  --focus-ring: #13b981;
   --sh-btn: 0 14px 34px -16px rgba(19, 185, 129, 0.35);
 }
 [data-theme="dark"][data-accent="blue"] {
   --accent: #3b6fe0;
+  --accent-fg: #9cb6ff;
+  --accent-ink: #fffdf7;
+  --accent-text: #fffdf7;
   --accent-soft: rgba(59, 111, 224, 0.15);
+  --focus-ring: #3b6fe0;
   --sh-btn: 0 14px 34px -16px rgba(59, 111, 224, 0.35);
 }
 [data-theme="dark"][data-accent="amber"] {
   --accent: #d98a2b;
+  --accent-fg: #f2b66d;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(217, 138, 43, 0.15);
+  --focus-ring: #d98a2b;
   --sh-btn: 0 14px 34px -16px rgba(217, 138, 43, 0.35);
 }
 
@@ -200,28 +250,49 @@
   --sh-card: 0 28px 54px -30px rgba(0, 0, 0, 0.75);
   /* accent (default: Gold) + derived — in Ark the inverse-fill == accent */
   --accent: #d9ae63;
+  --accent-fg: #d9ae63;
   --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(217, 174, 99, 0.15);
+  --focus-ring: #d9ae63;
   --sh-btn: 0 14px 34px -16px rgba(217, 174, 99, 0.85);
   --inv-bg: #d9ae63;
   --inv-tx: #081426;
   --liquid: #e8c074;
+  --status-signal-foreground: #6fe0ba;
+  --status-signal-surface: #102f2c;
+  --status-caution-foreground: #f2b66d;
+  --status-caution-surface: #342b20;
+  --status-fault-foreground: #ffb4aa;
+  --status-fault-surface: #352229;
 }
 [data-theme="ark"][data-accent="amber"] {
   --accent: #e2a338;
+  --accent-fg: #e2a338;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(226, 163, 56, 0.15);
+  --focus-ring: #e2a338;
   --sh-btn: 0 14px 34px -16px rgba(226, 163, 56, 0.85);
   --inv-bg: #e2a338;
 }
 [data-theme="ark"][data-accent="ivory"] {
   --accent: #e9e1cc;
+  --accent-fg: #e9e1cc;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(233, 225, 204, 0.15);
+  --focus-ring: #e9e1cc;
   --sh-btn: 0 14px 34px -16px rgba(233, 225, 204, 0.85);
   --inv-bg: #e9e1cc;
 }
 [data-theme="ark"][data-accent="bronze"] {
   --accent: #c98c49;
+  --accent-fg: #c98c49;
+  --accent-ink: #081426;
+  --accent-text: #081426;
   --accent-soft: rgba(201, 140, 73, 0.15);
+  --focus-ring: #c98c49;
   --sh-btn: 0 14px 34px -16px rgba(201, 140, 73, 0.85);
   --inv-bg: #c98c49;
 }

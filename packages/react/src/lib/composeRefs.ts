@@ -15,8 +15,18 @@ export function composeRefs<T>(...refs: PossibleRef<T>[]): (node: T) => void {
   return (node: T) => refs.forEach((ref) => setRef(ref, node));
 }
 
-/** Hook form of {@link composeRefs}, memoized on the given refs. */
-export function useComposedRefs<T>(...refs: PossibleRef<T>[]): (node: T) => void {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  return React.useCallback(composeRefs(...refs), refs);
+/** Hook form of {@link composeRefs}, memoized for the component-library use case. */
+export function useComposedRefs<T>(
+  first: PossibleRef<T>,
+  second?: PossibleRef<T>,
+  third?: PossibleRef<T>,
+): (node: T) => void {
+  return React.useCallback(
+    (node: T) => {
+      setRef(first, node);
+      setRef(second, node);
+      setRef(third, node);
+    },
+    [first, second, third],
+  );
 }

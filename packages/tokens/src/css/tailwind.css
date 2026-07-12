@@ -1,0 +1,92 @@
+/* ============================================================================
+   @alchyx/tokens/tailwind.css — Tailwind CSS v4 theme bridge.
+
+   Import after Tailwind and the Alchyx token foundation:
+
+     @import "tailwindcss";
+     @import "@alchyx/tokens/css";
+     @import "@alchyx/tokens/tailwind.css";
+
+   `inline` is intentional: generated utilities read the active Alchyx skin's
+   runtime variables instead of capturing the values from :root.
+   ========================================================================== */
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface2);
+  --color-deep: var(--deep);
+  --color-deep-2: var(--deep2);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink2);
+  --color-sub: var(--sub);
+  --color-faint: var(--faint);
+  --color-deep-ink: var(--deep-ink);
+  --color-deep-sub: var(--deep-sub);
+  --color-deep-faint: var(--deep-faint);
+
+  --color-bd: var(--bd);
+  --color-bd-2: var(--bd2);
+  --color-bd-hover: var(--bd-hov);
+  --color-input-border: var(--input-bd);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-fg);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
+  --color-accent-soft: var(--accent-soft);
+  --color-focus-ring: var(--focus-ring);
+  --color-inverse-bg: var(--inv-bg);
+  --color-inverse-text: var(--inv-tx);
+
+  --color-signal: var(--status-signal);
+  --color-signal-foreground: var(--status-signal-foreground);
+  --color-signal-surface: var(--status-signal-surface);
+  --color-caution: var(--status-caution);
+  --color-caution-foreground: var(--status-caution-foreground);
+  --color-caution-surface: var(--status-caution-surface);
+  --color-fault: var(--status-fault);
+  --color-fault-foreground: var(--status-fault-foreground);
+  --color-fault-surface: var(--status-fault-surface);
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Hanken Grotesk", system-ui, sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  --text-t-display: clamp(1.9rem, 3.6vw, 3.2rem);
+  --text-t-display--line-height: 1.03;
+  --text-t-display--letter-spacing: -0.03em;
+  --text-t-section: clamp(1.7rem, 3vw, 2.4rem);
+  --text-t-section--line-height: 1.08;
+  --text-t-section--letter-spacing: -0.025em;
+  --text-t-card: 1.5rem;
+  --text-t-card--line-height: 1.1;
+  --text-t-card--letter-spacing: -0.02em;
+  --text-t-body: 17px;
+  --text-t-body--line-height: 1.65;
+  --text-t-mono: 12px;
+  --text-t-mono--letter-spacing: 0.2em;
+  --text-t-stat: clamp(2.2rem, 4vw, 3.2rem);
+  --text-t-stat--line-height: 1;
+  --text-t-stat--letter-spacing: -0.04em;
+
+  --radius-control: 11px;
+  --radius-control-sm: 10px;
+  --radius-card: 16px;
+  --radius-panel: 18px;
+  --radius-panel-lg: 22px;
+  --radius-pill: 100px;
+
+  --shadow-card: var(--sh-card);
+  --shadow-button: var(--sh-btn);
+  --shadow-toast: 0 18px 44px -18px rgba(0, 0, 0, 0.55);
+  --shadow-modal: 0 40px 90px -40px rgba(0, 0, 0, 0.6);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  --animate-reveal: alx-revealUp 0.85s var(--ease-expo) both;
+  --animate-blink: alx-blink 2.4s ease-in-out infinite;
+  --animate-shimmer: alx-shimmer 1.6s linear infinite;
+  --animate-spin: alx-spin 0.8s linear infinite;
+}

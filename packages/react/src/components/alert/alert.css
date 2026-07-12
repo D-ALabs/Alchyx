@@ -1,0 +1,142 @@
+/* Alert — a tone-tinted callout / inline banner.
+   Twilio Paste Callout tones + GitHub Primer Flash anatomy + Ant Design Alert
+   API on the D-ALabs status language. Every tone sets its own --alx-alert-hue;
+   the tint, border, icon, and left status bar are all mixed from that one hue via
+   color-mix, so it stays legible across the Lab / Dark / Ark skins. */
+.alx-alert {
+  --alx-alert-hue: var(--accent);
+  --alx-alert-foreground: var(--ink);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 16px 15px 20px;
+  border: 1px solid color-mix(in srgb, var(--alx-alert-hue) 26%, var(--bd));
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--alx-alert-hue) 8%, var(--surface));
+  color: var(--ink);
+  overflow: hidden;
+  animation: alx-alert-in 0.4s var(--ease-expo) both;
+}
+
+/* Left status bar, clipped to the card radius by overflow:hidden. */
+.alx-alert::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: color-mix(in srgb, var(--alx-alert-hue) 82%, transparent);
+}
+
+/* Tones — each sets the single hue everything derives from. */
+.alx-alert--info {
+  --alx-alert-hue: var(--accent);
+}
+.alx-alert--signal {
+  --alx-alert-hue: var(--status-signal);
+  --alx-alert-foreground: var(--status-signal-foreground);
+}
+.alx-alert--caution {
+  --alx-alert-hue: var(--status-caution);
+  --alx-alert-foreground: var(--status-caution-foreground);
+}
+.alx-alert--fault {
+  --alx-alert-hue: var(--status-fault);
+  --alx-alert-foreground: var(--status-fault-foreground);
+}
+
+.alx-alert__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  color: var(--alx-alert-foreground);
+}
+.alx-alert__icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.alx-alert__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.alx-alert__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.alx-alert__body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sub);
+}
+/* Title-less alerts read as the primary message, so lift the body toward ink. */
+.alx-alert__content > .alx-alert__body:only-child {
+  color: var(--ink2);
+}
+.alx-alert__body a {
+  color: var(--alx-alert-foreground);
+  text-underline-offset: 2px;
+}
+
+.alx-alert__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin: -3px -4px 0 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-control-sm);
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.alx-alert__close:hover {
+  background: color-mix(in srgb, var(--alx-alert-hue) 14%, transparent);
+  color: var(--ink);
+}
+.alx-alert__close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.alx-alert__close svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+@keyframes alx-alert-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-alert {
+    animation: none;
+  }
+  .alx-alert__close {
+    transition: none;
+  }
+}

@@ -27,21 +27,25 @@ export function useControllableState<T>({
   const onChangeRef = React.useRef(onChange);
   React.useEffect(() => {
     onChangeRef.current = onChange;
-  });
+  }, [onChange]);
 
   const currentRef = React.useRef(current);
-  currentRef.current = current;
+  React.useEffect(() => {
+    currentRef.current = current;
+  }, [current]);
 
   const setValue = React.useCallback(
     (next: React.SetStateAction<T>) => {
+      const previous = currentRef.current;
       const resolved =
         typeof next === "function"
-          ? (next as (prev: T) => T)(currentRef.current)
+          ? (next as (prev: T) => T)(previous)
           : next;
       if (!isControlled) {
+        currentRef.current = resolved;
         setUncontrolled(resolved);
       }
-      if (!Object.is(resolved, currentRef.current)) {
+      if (!Object.is(resolved, previous)) {
         onChangeRef.current?.(resolved);
       }
     },

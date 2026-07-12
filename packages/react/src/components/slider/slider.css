@@ -1,0 +1,74 @@
+/* Slider — single-thumb range rail. Surface2 track, accent fill, surface knob
+   ringed in accent. Position is set inline; only focus/hover states animate so
+   the drag stays crisp. */
+.alx-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 140px;
+  height: 20px;
+  touch-action: none;
+  user-select: none;
+}
+.alx-slider[data-disabled] {
+  opacity: 0.5;
+}
+
+.alx-slider__track {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  cursor: pointer;
+}
+.alx-slider[data-disabled] .alx-slider__track {
+  cursor: not-allowed;
+}
+
+.alx-slider__range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}
+
+.alx-slider__thumb {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  box-shadow: var(--sh-card);
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  transition:
+    box-shadow 0.2s var(--ease-expo),
+    border-color 0.2s var(--ease-expo);
+}
+.alx-slider__thumb:hover {
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.alx-slider__thumb:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.alx-slider[data-dragging] .alx-slider__thumb {
+  cursor: grabbing;
+  box-shadow: 0 0 0 5px var(--accent-soft);
+}
+.alx-slider[data-disabled] .alx-slider__thumb {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-slider__thumb {
+    transition: none;
+  }
+}

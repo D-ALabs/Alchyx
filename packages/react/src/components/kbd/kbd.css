@@ -1,0 +1,51 @@
+/* Kbd — a single printed keyboard key. GitHub Primer lineage.
+   Mono caps on a translucent inset well, hairline border, subtle keycap shadow. */
+.alx-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--ink2);
+  background: var(--surface2);
+  border: 1px solid var(--bd);
+  border-radius: var(--radius-control-sm);
+  /* Top inner light + bottom inner line reads as a shallow keycap. */
+  box-shadow: inset 0 1px 0 var(--surface), inset 0 -2px 0 var(--bd2);
+  user-select: none;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.alx-kbd:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Sizes */
+.alx-kbd--sm {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  font-size: 11px;
+}
+.alx-kbd--md {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-kbd {
+    transition: none;
+  }
+}

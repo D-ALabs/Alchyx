@@ -1,0 +1,95 @@
+/* Switch — pill track, spring knob, accent when on. */
+.alx-switch {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.alx-switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.alx-switch__track {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-pill);
+  background: var(--surface2);
+  border: 1px solid var(--bd-hov);
+  transition: background-color 0.3s var(--ease-expo), border-color 0.3s var(--ease-expo);
+}
+.alx-switch__thumb {
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  background: var(--faint);
+  transform: translateY(-50%);
+  transition: left 0.35s var(--ease-spring), background-color 0.25s ease;
+}
+
+/* Sizes */
+.alx-switch--md .alx-switch__track {
+  width: 46px;
+  height: 26px;
+}
+.alx-switch--md .alx-switch__thumb {
+  width: 20px;
+  height: 20px;
+  left: 3px;
+}
+.alx-switch--md[data-state="checked"] .alx-switch__thumb {
+  left: 23px;
+}
+.alx-switch--sm .alx-switch__track {
+  width: 36px;
+  height: 20px;
+}
+.alx-switch--sm .alx-switch__thumb {
+  width: 15px;
+  height: 15px;
+  left: 2px;
+}
+.alx-switch--sm[data-state="checked"] .alx-switch__thumb {
+  left: 19px;
+}
+
+/* On state */
+.alx-switch[data-state="checked"] .alx-switch__track {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.alx-switch[data-state="checked"] .alx-switch__thumb {
+  background: var(--accent-ink);
+}
+
+.alx-switch:focus-visible {
+  outline: none;
+}
+.alx-switch:focus-visible .alx-switch__track {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Row with label */
+.alx-switch-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.alx-switch-row__label {
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.alx-switch:disabled + .alx-switch-row__label {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alx-switch__track,
+  .alx-switch__thumb {
+    transition: none;
+  }
+}
