@@ -26,6 +26,16 @@
   --color-deep-sub: var(--deep-sub);
   --color-deep-faint: var(--deep-faint);
 
+  --color-syntax-comment: var(--syntax-comment);
+  --color-syntax-keyword: var(--syntax-keyword);
+  --color-syntax-function: var(--syntax-function);
+  --color-syntax-variable: var(--syntax-variable);
+  --color-syntax-string: var(--syntax-string);
+  --color-syntax-number: var(--syntax-number);
+  --color-syntax-type: var(--syntax-type);
+  --color-syntax-operator: var(--syntax-operator);
+  --color-syntax-punctuation: var(--syntax-punctuation);
+
   --color-bd: var(--bd);
   --color-bd-2: var(--bd2);
   --color-bd-hover: var(--bd-hov);

@@ -8,6 +8,9 @@ const distCssDirectory = resolve(packageRoot, "dist/css");
 const tokensCss = await readFile(resolve(sourceCssDirectory, "tokens.css"), "utf8");
 const packageJson = JSON.parse(await readFile(resolve(packageRoot, "package.json"), "utf8"));
 const built = await import(pathToFileURL(resolve(packageRoot, "dist/index.js")).href);
+const builtTailwind = await import(
+  pathToFileURL(resolve(packageRoot, "dist/tailwind-preset.js")).href
+);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -32,6 +35,41 @@ function contrast(first, second) {
   );
 }
 
+const syntaxRoles = [
+  "comment",
+  "keyword",
+  "function",
+  "variable",
+  "string",
+  "number",
+  "type",
+  "operator",
+  "punctuation",
+];
+
+function syntaxCssVariable(role) {
+  return `--syntax-${role}`;
+}
+
+function syntaxCssVarKey(role) {
+  return `syntax${role[0].toUpperCase()}${role.slice(1)}`;
+}
+
+function declarationsForSkin(skin) {
+  const pattern =
+    skin === "lab"
+      ? /:root,\s*\[data-theme="lab"\]\s*\{([\s\S]*?)\n\}/
+      : new RegExp(`\\[data-theme="${skin}"\\]\\s*\\{([\\s\\S]*?)\\n\\}`);
+  const block = pattern.exec(tokensCss);
+  assert(block !== null, `Missing CSS token block for ${skin}`);
+  return new Map(
+    [...block[1].matchAll(/^\s*(--[a-z0-9-]+)\s*:\s*([^;]+);/gim)].map((match) => [
+      match[1],
+      match[2].trim(),
+    ]),
+  );
+}
+
 const declaredVariables = new Set(
   [...tokensCss.matchAll(/^\s*(--[a-z0-9-]+)\s*:/gim)].map((match) => match[1]),
 );
@@ -44,6 +82,10 @@ assert(undeclaredVariables.length === 0, `cssVar contains undeclared names: ${un
 assert(
   Object.values(built.cssVar).length === exportedVariables.size,
   "cssVar contains duplicate custom-property names",
+);
+assert(
+  built.tokens.syntaxPalettes === built.syntaxPalettes,
+  "The aggregate tokens export must expose syntaxPalettes",
 );
 
 for (const skin of Object.keys(built.skins)) {
@@ -86,6 +128,41 @@ for (const skin of Object.keys(built.skins)) {
       `${skin}/${status} status pair is below 4.5:1`,
     );
   }
+
+  const syntaxPalette = built.syntaxPalettes[skin];
+  assert(syntaxPalette !== undefined, `${skin} syntax palette is missing`);
+  const syntaxPaletteRoles = Object.keys(syntaxPalette);
+  const missingSyntaxRoles = syntaxRoles.filter((role) => !syntaxPaletteRoles.includes(role));
+  const extraSyntaxRoles = syntaxPaletteRoles.filter((role) => !syntaxRoles.includes(role));
+  assert(
+    missingSyntaxRoles.length === 0 && extraSyntaxRoles.length === 0,
+    `${skin} syntax roles differ: missing ${missingSyntaxRoles.join(", ")}; extra ${extraSyntaxRoles.join(", ")}`,
+  );
+
+  const cssDeclarations = declarationsForSkin(skin);
+  const syntaxSurfaces = [
+    ["bg", built.skins[skin].bg],
+    ["surface", built.skins[skin].surface],
+  ];
+  if (skin !== "lab") syntaxSurfaces.push(["panel", built.skins[skin].panel]);
+
+  for (const role of syntaxRoles) {
+    const variable = syntaxCssVariable(role);
+    assert(
+      built.cssVar[syntaxCssVarKey(role)] === variable,
+      `cssVar mapping is missing for ${variable}`,
+    );
+    assert(
+      cssDeclarations.get(variable)?.toLowerCase() === syntaxPalette[role].toLowerCase(),
+      `${skin}/${role} differs between TypeScript and CSS`,
+    );
+    for (const [surfaceName, surface] of syntaxSurfaces) {
+      assert(
+        contrast(syntaxPalette[role], surface) >= 4.5,
+        `${skin}/${role} syntax color is below 4.5:1 on ${surfaceName}`,
+      );
+    }
+  }
 }
 
 const invalidAccentFallback = built.getAccentPalette("lab", "gold");
@@ -117,6 +194,18 @@ assert(
 
 const tailwindCss = await readFile(resolve(sourceCssDirectory, "tailwind.css"), "utf8");
 assert(tailwindCss.includes("@theme inline"), "Tailwind CSS v4 bridge must use @theme inline");
+const tailwindSyntax = builtTailwind.alchyxPreset.theme.extend.colors.syntax;
+for (const role of syntaxRoles) {
+  const variable = syntaxCssVariable(role);
+  assert(
+    tailwindCss.includes(`--color-syntax-${role}: var(${variable});`),
+    `Tailwind CSS v4 bridge is missing ${role} syntax color`,
+  );
+  assert(
+    tailwindSyntax[role] === `var(${variable})`,
+    `Tailwind CSS v3 preset is missing ${role} syntax color`,
+  );
+}
 
 console.log(
   `Token contracts valid: ${declaredVariables.size} CSS variables, ${sourceCssFiles.length} CSS files, all accessible pairs pass.`,

@@ -16,9 +16,11 @@ import {
   defaultAccentBySkin,
   getAccentPalette,
   skins,
+  syntaxPalettes,
 } from "@alchyx/tokens";
 
 const palette = getAccentPalette("ark", "amber");
+const syntax = syntaxPalettes.ark;
 ```
 
 `getAccentPalette()` falls back to `defaultAccentBySkin[skin]` when a stored
@@ -32,6 +34,12 @@ skin's `--bg` and `--surface`. Use `var(--accent-text)` for content on an
 accent-filled control and `var(--focus-ring)` for focus indication. The older
 `--accent-ink` name remains an accessible alias of `--accent-text`. Semantic statuses expose
 `--status-{signal|caution|fault}-{foreground|surface}` pairs.
+
+Code surfaces use the skin-specific `syntaxPalettes` values or their CSS
+counterparts: `--syntax-comment`, `--syntax-keyword`, `--syntax-function`,
+`--syntax-variable`, `--syntax-string`, `--syntax-number`, `--syntax-type`,
+`--syntax-operator`, and `--syntax-punctuation`. These roles are readable on
+the active skin's `--bg` and `--surface`; plain code continues to use `--ink`.
 
 ## Tailwind CSS
 
@@ -58,4 +66,5 @@ pnpm --filter @alchyx/tokens check
 
 `check` builds ESM, CommonJS, declarations, and CSS, then validates the export
 contract, complete `cssVar` coverage, deterministic CSS copies, palette
-fallbacks, and WCAG contrast thresholds.
+fallbacks, typed/CSS parity, and WCAG contrast thresholds for accent, status,
+and syntax foregrounds.

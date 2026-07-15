@@ -43,6 +43,17 @@ export const alchyxPreset = {
         "deep-ink": "var(--deep-ink)",
         "deep-sub": "var(--deep-sub)",
         "deep-faint": "var(--deep-faint)",
+        syntax: {
+          comment: "var(--syntax-comment)",
+          keyword: "var(--syntax-keyword)",
+          function: "var(--syntax-function)",
+          variable: "var(--syntax-variable)",
+          string: "var(--syntax-string)",
+          number: "var(--syntax-number)",
+          type: "var(--syntax-type)",
+          operator: "var(--syntax-operator)",
+          punctuation: "var(--syntax-punctuation)",
+        },
         accent: {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-fg)",

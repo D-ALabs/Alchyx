@@ -79,6 +79,19 @@ export interface StatusPalette {
   surface: string;
 }
 
+/** Skin-aware source-code colors shared by web and terminal renderers. */
+export interface SyntaxPalette {
+  comment: string;
+  keyword: string;
+  function: string;
+  variable: string;
+  string: string;
+  number: string;
+  type: string;
+  operator: string;
+  punctuation: string;
+}
+
 export const skins: Record<SkinName, SkinPalette> = {
   lab: {
     bg: "#F5F2EA",
@@ -187,6 +200,43 @@ export const skins: Record<SkinName, SkinPalette> = {
     invTx: "#14243E",
   },
 };
+
+/** Accessible syntax colors for every skin. */
+export const syntaxPalettes = {
+  lab: {
+    comment: "#54606E",
+    keyword: "#6B4E9B",
+    function: "#257287",
+    variable: "#16202E",
+    string: "#087A57",
+    number: "#8A4F0A",
+    type: "#315EC0",
+    operator: "#9F3F35",
+    punctuation: "#54606E",
+  },
+  dark: {
+    comment: "#9AA4B0",
+    keyword: "#B0A4D8",
+    function: "#79C0D0",
+    variable: "#ECE7DB",
+    string: "#6FE0BA",
+    number: "#F2B66D",
+    type: "#9CB6FF",
+    operator: "#FFB4AA",
+    punctuation: "#9AA4B0",
+  },
+  ark: {
+    comment: "#9FB1C6",
+    keyword: "#C7B6E8",
+    function: "#79C0D0",
+    variable: "#F4EEE0",
+    string: "#6FE0BA",
+    number: "#E8C074",
+    type: "#9CB6FF",
+    operator: "#FFB4AA",
+    punctuation: "#9FB1C6",
+  },
+} as const satisfies Record<SkinName, SyntaxPalette>;
 
 /** Accents available per skin (the first of each is the default). */
 export const accentsBySkin: Record<SkinName, AccentName[]> = {
@@ -548,6 +598,15 @@ export const cssVar = {
   deepInk: "--deep-ink",
   deepSub: "--deep-sub",
   deepFaint: "--deep-faint",
+  syntaxComment: "--syntax-comment",
+  syntaxKeyword: "--syntax-keyword",
+  syntaxFunction: "--syntax-function",
+  syntaxVariable: "--syntax-variable",
+  syntaxString: "--syntax-string",
+  syntaxNumber: "--syntax-number",
+  syntaxType: "--syntax-type",
+  syntaxOperator: "--syntax-operator",
+  syntaxPunctuation: "--syntax-punctuation",
   chipBd: "--chip-bd",
   chipBg: "--chip-bg",
   chipTx: "--chip-tx",
@@ -578,6 +637,7 @@ export const cssVar = {
 
 export const tokens = {
   skins,
+  syntaxPalettes,
   accentsBySkin,
   defaultAccentBySkin,
   accentPalettes,

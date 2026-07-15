@@ -52,7 +52,7 @@ differently. Alchyx takes the strongest ideas from **eight** of them —
 
 | Package | What it is |
 |---|---|
-| [`@alchyx/tokens`](packages/tokens) | Framework-agnostic Lab/Dark/Ark tokens, accessible accent/status roles, CSS foundation, typed values, and Tailwind 3/4 adapters. |
+| [`@alchyx/tokens`](packages/tokens) | Framework-agnostic Lab/Dark/Ark tokens, accessible accent/status/syntax roles, CSS foundation, typed values, and Tailwind 3/4 adapters. |
 | [`@alchyx/react`](packages/react) | 31 React components, form-aware controls, nested overlay coordination, behavior primitives, and `AlchyxProvider`. |
 | [`@alchyx/assets`](packages/assets) | The D-ALabs marks — alchemist, flask, wordmark — as `currentColor` SVG plus Lab/Dark/Ark variants generated from the tokens. |
 | `@alchyx/cli` *(planned)* | Scaffolding + component sync. Global binary **`alchyx`** (see [CLI](#cli)). |
@@ -123,6 +123,13 @@ accent that can only decorate is not an accent. Read `--accent` for fills and
 `--accent-fg` for text and both skins stay correct on their own.
 Provider works controlled or uncontrolled, and can drive the document `<html>`
 instead of a wrapper (`as="html"`).
+
+Code editors, transcripts, and documentation can consume the canonical
+`syntaxPalettes[skin]` typed palette or the matching `--syntax-*` CSS variables.
+The nine roles cover comments, keywords, functions, variables, strings,
+numbers, types, operators, and punctuation while ordinary code inherits the
+skin's normal ink. Every syntax foreground is contrast-checked on its skin's
+code-capable surfaces.
 
 ## Tailwind CSS 4 (optional)
 

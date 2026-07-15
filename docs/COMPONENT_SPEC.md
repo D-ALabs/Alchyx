@@ -91,6 +91,9 @@ libs. React + `react-dom` (peers) only.
   `var(--accent-text)` for copy on an accent fill, `var(--accent-soft)` for subtle
   surfaces, and `var(--focus-ring)` for focus indication. `--accent-ink` remains
   a compatibility alias of `--accent-text`; prefer the role-specific names.
+- Syntax highlighting is the deliberate exception to the one-accent rule.
+  Code surfaces may use only the canonical `--syntax-*` roles below; do not
+  repurpose those hues for ordinary component decoration.
 - Motion is slow/calm. Easings: `var(--ease-expo)` = `cubic-bezier(.16,1,.3,1)`
   (entrances, hover-lift), `var(--ease-spring)` = `cubic-bezier(.2,.9,.3,1.2)`
   (toggle knob, press). Hover/border transitions `.2s–.3s`. Reuse keyframes from
@@ -126,6 +129,10 @@ Easing: `--ease-expo`, `--ease-spring`. Fonts: `--font-display`, `--font-sans`,
 Semantic status: `--status-signal`, `--status-caution`, and `--status-fault` are
 solid indicator/chart hues. Status copy and tinted panels must use the matching
 `--status-*-foreground` and `--status-*-surface` roles.
+Syntax: `--syntax-comment`, `--syntax-keyword`, `--syntax-function`,
+`--syntax-variable`, `--syntax-string`, `--syntax-number`, `--syntax-type`,
+`--syntax-operator`, and `--syntax-punctuation`. Plain code uses `--ink`; the
+syntax roles are reserved for tokenized code content.
 
 ## 5. Accessibility (required)
 
