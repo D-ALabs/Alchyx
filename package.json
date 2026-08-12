@@ -19,7 +19,7 @@
     "test": "pnpm test:tokens && pnpm test:react",
     "playground": "pnpm --filter @alchyx/playground dev",
     "build:playground": "pnpm --filter @alchyx/playground build",
-    "build": "pnpm --filter @alchyx/tokens build && pnpm --filter @alchyx/react build",
+    "build": "pnpm --filter @alchyx/tokens build && pnpm --filter @alchyx/react build && pnpm --filter @alchyx/assets build",
     "pack:smoke": "node scripts/pack-smoke.mjs",
     "check": "pnpm generate:check && pnpm typecheck && pnpm test && pnpm build && pnpm build:playground"
   },

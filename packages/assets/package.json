@@ -1,0 +1,35 @@
+{
+  "name": "@alchyx/assets",
+  "version": "0.2.0-beta.1",
+  "description": "Alchyx brand assets — the D-ALabs marks as currentColor SVG masters, generated Lab/Dark/Ark variants, and the original raster lockups.",
+  "license": "MIT",
+  "author": "D-ALabs, LLC",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./marks/*": "./marks/*",
+    "./skins/*": "./skins/*",
+    "./raster/*": "./raster/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "marks",
+    "skins",
+    "raster",
+    "scripts",
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build-svg.mjs",
+    "check": "node scripts/build-svg.mjs && git diff --exit-code -- skins",
+    "test": "pnpm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

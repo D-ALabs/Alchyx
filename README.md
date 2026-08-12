@@ -54,6 +54,7 @@ differently. Alchyx takes the strongest ideas from **eight** of them —
 |---|---|
 | [`@alchyx/tokens`](packages/tokens) | Framework-agnostic Lab/Dark/Ark tokens, accessible accent/status roles, CSS foundation, typed values, and Tailwind 3/4 adapters. |
 | [`@alchyx/react`](packages/react) | 31 React components, form-aware controls, nested overlay coordination, behavior primitives, and `AlchyxProvider`. |
+| [`@alchyx/assets`](packages/assets) | The D-ALabs marks — alchemist, flask, wordmark — as `currentColor` SVG plus Lab/Dark/Ark variants generated from the tokens. |
 | `@alchyx/cli` *(planned)* | Scaffolding + component sync. Global binary **`alchyx`** (see [CLI](#cli)). |
 | [`apps/playground`](apps/playground) | A focused Vite integration harness for Button, package CSS, all three skins, and live accent switching. |
 
