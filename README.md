@@ -94,6 +94,7 @@ whole subtree.
 | **Lab** | `lab` (default) | Paper & ink, light, technical | Monochrome ink |
 | **Dark** | `dark` | Slate & bone, low-glare | Paper |
 | **Ark** | `ark` | Abyss & gold, premium / membership | Gold |
+| **Lembic** | `lembic` | Parchment & gold — Ark read in daylight | Gold |
 
 ```tsx
 import { useAlchyx } from "@alchyx/react";
@@ -111,7 +112,15 @@ function SkinSwitch() {
 ```
 
 Accents per skin — **Lab:** monochrome · mint · blue · amber ·
-**Dark:** paper · mint · blue · amber · **Ark:** gold · amber · ivory · bronze.
+**Dark:** paper · mint · blue · amber · **Ark:** gold · amber · ivory · bronze ·
+**Lembic:** gold · bronze · amber.
+
+**Lembic** is Ark's light counterpart, and the pair is why a skin is not just an
+inverted palette. In Ark the gold is both the fill and the copy; on parchment
+copy in `#d9ae63` sits at 1.9:1, so Lembic keeps the gold for fills and drops
+`--accent-fg` to bronze `#7a4e0b`. Ivory is absent for the same reason — an
+accent that can only decorate is not an accent. Read `--accent` for fills and
+`--accent-fg` for text and both skins stay correct on their own.
 Provider works controlled or uncontrolled, and can drive the document `<html>`
 instead of a wrapper (`as="html"`).
 

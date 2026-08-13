@@ -7,7 +7,7 @@
  * everything at runtime.
  */
 
-export type SkinName = "lab" | "dark" | "ark";
+export type SkinName = "lab" | "dark" | "ark" | "lembic";
 
 export type AccentName =
   | "monochrome"
@@ -158,6 +158,34 @@ export const skins: Record<SkinName, SkinPalette> = {
     invBg: "#D9AE63",
     invTx: "#081426",
   },
+  lembic: {
+    bg: "#F7F2E4",
+    surface: "#FFFCF4",
+    surface2: "#F0E9D8",
+    deep: "#0E1B30",
+    deep2: "#081426",
+    panel: "#0E1B30",
+    panelBd: "rgba(217,174,99,.22)",
+    ink: "#14243E",
+    ink2: "#1B2E4C",
+    sub: "#55647C",
+    faint: "#5A6A82",
+    bd: "#E3D9BF",
+    bd2: "#EDE5D1",
+    bdHov: "#C8B68C",
+    stat: "#8A5A12",
+    deepInk: "#F4EEE0",
+    deepSub: "#9FB1C6",
+    deepFaint: "#7E8EA2",
+    // The gold stays the gold for fills, but copy set in it would sit at
+    // 1.9:1 on parchment — so `accentFg` drops to the bronze end of the ramp.
+    accent: "#D9AE63",
+    accentInk: "#081426",
+    accentFg: "#7A4E0B",
+    accentSoft: "rgba(217,174,99,.18)",
+    invBg: "#F7F2E4",
+    invTx: "#14243E",
+  },
 };
 
 /** Accents available per skin (the first of each is the default). */
@@ -165,6 +193,9 @@ export const accentsBySkin: Record<SkinName, AccentName[]> = {
   lab: ["monochrome", "mint", "blue", "amber"],
   dark: ["paper", "mint", "blue", "amber"],
   ark: ["gold", "amber", "ivory", "bronze"],
+  // Ivory is absent on purpose: on parchment it cannot reach 4.5:1 as copy,
+  // and an accent that only works as decoration is not an accent here.
+  lembic: ["gold", "bronze", "amber"],
 };
 
 /** Default accent chosen when a skin has no explicit (or an invalid) accent. */
@@ -172,6 +203,7 @@ export const defaultAccentBySkin = {
   lab: "monochrome",
   dark: "paper",
   ark: "gold",
+  lembic: "gold",
 } as const satisfies Record<SkinName, AccentName>;
 
 /**
@@ -305,6 +337,38 @@ export const accentPalettes = {
       inverseBackground: "#C98C49",
     },
   },
+  lembic: {
+    gold: {
+      accent: "#D9AE63",
+      foreground: "#7A4E0B",
+      accentInk: "#081426",
+      accentText: "#081426",
+      accentSoft: "rgba(217,174,99,.18)",
+      focusRing: "#7A4E0B",
+      shadow: "0 12px 30px -14px rgba(217,174,99,.55)",
+      inverseBackground: "#F7F2E4",
+    },
+    bronze: {
+      accent: "#C98C49",
+      foreground: "#6F4410",
+      accentInk: "#081426",
+      accentText: "#081426",
+      accentSoft: "rgba(201,140,73,.18)",
+      focusRing: "#6F4410",
+      shadow: "0 12px 30px -14px rgba(201,140,73,.55)",
+      inverseBackground: "#F7F2E4",
+    },
+    amber: {
+      accent: "#D98A2B",
+      foreground: "#8A4F0A",
+      accentInk: "#081426",
+      accentText: "#081426",
+      accentSoft: "rgba(217,138,43,.18)",
+      focusRing: "#8A4F0A",
+      shadow: "0 12px 30px -14px rgba(217,138,43,.55)",
+      inverseBackground: "#F7F2E4",
+    },
+  },
 } as const satisfies Record<SkinName, Partial<Record<AccentName, AccentPalette>>>;
 
 /**
@@ -363,6 +427,11 @@ export const statusPalettes: Record<SkinName, Record<StatusName, StatusPalette>>
     signal: { solid: status.signal, foreground: "#6FE0BA", surface: "#102F2C" },
     caution: { solid: status.caution, foreground: "#F2B66D", surface: "#342B20" },
     fault: { solid: status.fault, foreground: "#FFB4AA", surface: "#352229" },
+  },
+  lembic: {
+    signal: { solid: status.signal, foreground: "#087A57", surface: "#DDF4EA" },
+    caution: { solid: status.caution, foreground: "#8A4F0A", surface: "#F8E8D2" },
+    fault: { solid: status.fault, foreground: "#9F3F35", surface: "#F8E1DE" },
   },
 };
 

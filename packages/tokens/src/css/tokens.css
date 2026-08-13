@@ -297,6 +297,86 @@
   --inv-bg: #c98c49;
 }
 
+/* ============================================================================
+   SKIN 4 — LEMBIC (parchment & gold — the light key of the Ark language)
+
+   Ark read in daylight: the same warm gold and navy, inverted. It is a distinct
+   skin rather than an accent on Lab because the gold has to be handled
+   differently in a light key — as a *fill* it stays #d9ae63, but as *copy* it
+   would sit at 1.9:1 on parchment, so --accent-fg drops to bronze. That split
+   is the whole skin.
+   ========================================================================== */
+[data-theme="lembic"] {
+  --bg: #f7f2e4;
+  --surface: #fffcf4;
+  --surface2: #f0e9d8;
+  --deep: #0e1b30;
+  --deep2: #081426;
+  --panel: #0e1b30;
+  --panel-bd: rgba(217, 174, 99, 0.22);
+  --ink: #14243e;
+  --ink2: #1b2e4c;
+  --sub: #55647c;
+  --faint: #5a6a82; /* holds 4.5:1 on bg, surface, and surface2 at meta sizes */
+  --bd: #e3d9bf;
+  --bd2: #ede5d1;
+  --bd-hov: #c8b68c;
+  --stat: #8a5a12;
+  --grid: rgba(20, 36, 62, 0.05);
+  --grid-deep: rgba(217, 174, 99, 0.05);
+  --deep-ink: #f4eee0;
+  --deep-sub: #9fb1c6;
+  --deep-faint: #7e8ea2;
+  --chip-bd: rgba(122, 78, 11, 0.24);
+  --chip-bg: rgba(217, 174, 99, 0.1);
+  --chip-tx: #7a4e0b;
+  --pill-bd: #d8cba7;
+  --pill-tx: #55647c;
+  --marq: rgba(20, 36, 62, 0.4);
+  --input-bd: #d8cba7;
+  --av-bg: #14243e;
+  --av-tx: #f7f2e4;
+  --av-bd: rgba(0, 0, 0, 0);
+  --sh-card: 0 26px 52px -32px rgba(20, 36, 62, 0.34);
+  /* accent (default: Gold) + derived — the fill stays gold, the copy goes bronze */
+  --accent: #d9ae63;
+  --accent-fg: #7a4e0b;
+  --accent-ink: #081426;
+  --accent-text: #081426;
+  --accent-soft: rgba(217, 174, 99, 0.18);
+  --focus-ring: #7a4e0b;
+  --sh-btn: 0 12px 30px -14px rgba(217, 174, 99, 0.55);
+  --inv-bg: #f7f2e4;
+  --inv-tx: #14243e;
+  --liquid: #d9ae63;
+  --status-signal-foreground: #087a57;
+  --status-signal-surface: #ddf4ea;
+  --status-caution-foreground: #8a4f0a;
+  --status-caution-surface: #f8e8d2;
+  --status-fault-foreground: #9f3f35;
+  --status-fault-surface: #f8e1de;
+}
+[data-theme="lembic"][data-accent="bronze"] {
+  --accent: #c98c49;
+  --accent-fg: #6f4410;
+  --accent-ink: #081426;
+  --accent-text: #081426;
+  --accent-soft: rgba(201, 140, 73, 0.18);
+  --focus-ring: #6f4410;
+  --sh-btn: 0 12px 30px -14px rgba(201, 140, 73, 0.55);
+  --inv-bg: #f7f2e4;
+}
+[data-theme="lembic"][data-accent="amber"] {
+  --accent: #d98a2b;
+  --accent-fg: #8a4f0a;
+  --accent-ink: #081426;
+  --accent-text: #081426;
+  --accent-soft: rgba(217, 138, 43, 0.18);
+  --focus-ring: #8a4f0a;
+  --sh-btn: 0 12px 30px -14px rgba(217, 138, 43, 0.55);
+  --inv-bg: #f7f2e4;
+}
+
 /* Orbit / signature-visual aliases (same for every skin). */
 :root,
 [data-theme] {

@@ -24,8 +24,12 @@ const tokenSheet = resolve(packageRoot, "../tokens/src/css/tokens.css");
  * Lab and Dark carry the mark in ink — that is the existing house treatment
  * (navy flask on paper, bone flask on slate). Ark is the premium skin whose
  * whole identity is the gold, so there the mark takes the accent.
+ *
+ * Lembic takes `accent`, not `accent-fg`: a mark is a fill, not copy, so it
+ * keeps the true gold rather than the bronze that accent-coloured *text* needs
+ * on parchment.
  */
-const ROLE_BY_SKIN = { lab: "ink", dark: "ink", ark: "accent" };
+const ROLE_BY_SKIN = { lab: "ink", dark: "ink", ark: "accent", lembic: "accent" };
 
 const css = await readFile(tokenSheet, "utf8");
 
