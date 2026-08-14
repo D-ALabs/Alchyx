@@ -1,8 +1,8 @@
 # `@alchyx/tokens`
 
-Framework-agnostic D-ALabs design tokens for the Lab, Dark, and Ark skins. The
-package includes runtime CSS variables, typed JavaScript values, and Tailwind
-CSS adapters.
+Framework-agnostic D-ALabs design tokens for the Lab, Dark, Ark, and Lembic
+skins. The package includes runtime CSS variables, typed JavaScript values,
+and Tailwind CSS adapters.
 
 ## CSS and typed tokens
 

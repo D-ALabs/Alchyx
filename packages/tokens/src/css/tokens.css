@@ -1,16 +1,18 @@
 /* ============================================================================
-   Alchyx Design Tokens — three skins in one sheet. Lab and Dark track the
-   current d-alabs-website neutral ramp; Ark retains its premium gold language.
+   Alchyx Design Tokens — four skins in one sheet. Lab and Dark track the
+   current d-alabs-website neutral ramp; Ark and Lembic share a gold language.
 
    Default (no attribute) = LAB.
      data-theme="lab"   paper & ink    (light)
      data-theme="dark"  slate & bone   (dark)
      data-theme="ark"   abyss & gold   (premium / membership)
+     data-theme="lembic" parchment & gold (light premium)
 
    Optionally pin an accent:  data-theme="lab" data-accent="mint"
      Lab:  monochrome(default) mint blue amber
      Dark: paper(default) mint blue amber
      Ark:  gold(default) amber ivory bronze
+     Lembic: gold(default) bronze amber
 
    Everything downstream reads CSS variables, so switching either attribute
    re-tints the whole tree.
@@ -345,6 +347,15 @@
   --ink2: #1b2e4c;
   --sub: #55647c;
   --faint: #5a6a82; /* holds 4.5:1 on bg, surface, and surface2 at meta sizes */
+  --syntax-comment: #55647c;
+  --syntax-keyword: #6b4e9b;
+  --syntax-function: #257287;
+  --syntax-variable: #14243e;
+  --syntax-string: #087a57;
+  --syntax-number: #8a5a12;
+  --syntax-type: #315ec0;
+  --syntax-operator: #9f3f35;
+  --syntax-punctuation: #55647c;
   --bd: #e3d9bf;
   --bd2: #ede5d1;
   --bd-hov: #c8b68c;

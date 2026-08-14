@@ -144,7 +144,9 @@ for (const skin of Object.keys(built.skins)) {
     ["bg", built.skins[skin].bg],
     ["surface", built.skins[skin].surface],
   ];
-  if (skin !== "lab") syntaxSurfaces.push(["panel", built.skins[skin].panel]);
+  if (skin === "dark" || skin === "ark") {
+    syntaxSurfaces.push(["panel", built.skins[skin].panel]);
+  }
 
   for (const role of syntaxRoles) {
     const variable = syntaxCssVariable(role);

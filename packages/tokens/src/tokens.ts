@@ -236,6 +236,17 @@ export const syntaxPalettes = {
     operator: "#FFB4AA",
     punctuation: "#9FB1C6",
   },
+  lembic: {
+    comment: "#55647C",
+    keyword: "#6B4E9B",
+    function: "#257287",
+    variable: "#14243E",
+    string: "#087A57",
+    number: "#8A5A12",
+    type: "#315EC0",
+    operator: "#9F3F35",
+    punctuation: "#55647C",
+  },
 } as const satisfies Record<SkinName, SyntaxPalette>;
 
 /** Accents available per skin (the first of each is the default). */

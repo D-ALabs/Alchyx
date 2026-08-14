@@ -34,8 +34,8 @@ differently. Alchyx takes the strongest ideas from **eight** of them —
 [Ant Design](https://github.com/ant-design/ant-design) — and unifies them under
 **one design language and one component API**:
 
-- **Token-driven, three skins.** Everything reads CSS variables, so a single
-  `data-theme` (Lab / Dark / Ark) and optional `data-accent` re-tints the whole
+- **Token-driven, four skins.** Everything reads CSS variables, so a single
+  `data-theme` (Lab / Dark / Ark / Lembic) and optional `data-accent` re-tints the whole
   tree at runtime. No hardcoded hex.
 - **Headless behavior, on-brand styling.** Accessible, keyboard-complete
   behavior (the Radix / Base UI / Astryx school) styled with the D-ALabs
@@ -52,11 +52,11 @@ differently. Alchyx takes the strongest ideas from **eight** of them —
 
 | Package | What it is |
 |---|---|
-| [`@alchyx/tokens`](packages/tokens) | Framework-agnostic Lab/Dark/Ark tokens, accessible accent/status/syntax roles, CSS foundation, typed values, and Tailwind 3/4 adapters. |
+| [`@alchyx/tokens`](packages/tokens) | Framework-agnostic Lab/Dark/Ark/Lembic tokens, accessible accent/status/syntax roles, CSS foundation, typed values, and Tailwind 3/4 adapters. |
 | [`@alchyx/react`](packages/react) | 31 React components, form-aware controls, nested overlay coordination, behavior primitives, and `AlchyxProvider`. |
-| [`@alchyx/assets`](packages/assets) | The D-ALabs marks — alchemist, flask, wordmark — as `currentColor` SVG plus Lab/Dark/Ark variants generated from the tokens. |
+| [`@alchyx/assets`](packages/assets) | The D-ALabs marks — alchemist, flask, wordmark — as `currentColor` SVG plus Lab/Dark/Ark/Lembic variants generated from the tokens. |
 | `@alchyx/cli` *(planned)* | Scaffolding + component sync. Global binary **`alchyx`** (see [CLI](#cli)). |
-| [`apps/playground`](apps/playground) | A focused Vite integration harness for Button, package CSS, all three skins, and live accent switching. |
+| [`apps/playground`](apps/playground) | A focused Vite integration harness for Button, package CSS, all four skins, and live accent switching. |
 
 ## Install
 
@@ -83,7 +83,7 @@ export function App() {
 }
 ```
 
-## Theming — three skins, one accent
+## Theming — four skins, one accent
 
 `AlchyxProvider` sets `data-theme` (and optional `data-accent`) and exposes them
 via context. Everything downstream reads CSS variables, so a change re-tints the
@@ -159,7 +159,7 @@ line for existing Tailwind CSS 3 consumers.
 
 ## Design tokens
 
-The token contract (identical across all three skins) is documented in
+The token contract (identical across all four skins) is documented in
 [`packages/tokens`](packages/tokens/src/css/tokens.css) and mirrored as typed JS:
 
 ```ts

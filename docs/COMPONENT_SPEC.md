@@ -73,7 +73,7 @@ libs. React + `react-dom` (peers) only.
   components.
 - **Only** use the CSS variables below. Never hardcode a brand, neutral, accent,
   or semantic status color in component CSS. Because everything reads variables, your component
-  automatically works in all three skins — **do not** write skin-specific rules
+  automatically works in all four skins — **do not** write skin-specific rules
   unless a value genuinely differs per skin (rare).
 - Radius vocabulary (use these, don't invent): controls/inputs
   `var(--radius-control)` = 11px (compact `--radius-control-sm` = 10px), cards

@@ -12,7 +12,7 @@ All notable changes to Alchyx are documented here. The project follows
 - Native form participation for custom form controls.
 - Provider-aware portals and nested overlay coordination.
 - Accessible semantic color roles and per-skin accent resolution.
-- Accessible syntax-color palettes for Lab, Dark, and Ark code surfaces.
+- Accessible syntax-color palettes for Lab, Dark, Ark, and Lembic code surfaces.
 - Tailwind CSS 4 CSS-first tokens while retaining the Tailwind 3 preset.
 
 ### Changed
